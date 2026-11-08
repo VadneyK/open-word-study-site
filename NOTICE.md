@@ -1,0 +1,15 @@
+# Data sources and licences
+
+| Source | Used for | Licence |
+|---|---|---|
+| STEPBible TAGNT, Tyndale House Cambridge, https://github.com/STEPBible/STEPBible-Data | Greek words, lemma, Strong's, morphology, glosses | CC BY 4.0 |
+| STEPBible TIPNR, Tyndale House Cambridge, https://github.com/STEPBible/STEPBible-Data | People, places and things, with every name and reference | CC BY 4.0 |
+| OpenBible.info cross references, https://www.openbible.info/labs/cross-references/ | Cross references ranked by reader votes | CC BY 4.0 |
+| unfoldingWord Translation Notes, https://git.door43.org/unfoldingWord/en_tn | Notes on hard phrases | CC BY-SA 4.0 |
+| STEPBible TAHOT, Tyndale House Cambridge, https://github.com/STEPBible/STEPBible-Data | Hebrew OT words, lemmas, glosses, morphology | CC BY 4.0 |
+| Berean Standard Bible and Berean interlinear tables, https://berean.bible | English renderings aligned to Greek | Public domain |
+| unfoldingWord Literal Text (ULT), https://git.door43.org/unfoldingWord/en_ult | English renderings aligned to Greek | CC BY-SA 4.0 |
+| unfoldingWord Simplified Text (UST), https://git.door43.org/unfoldingWord/en_ust | English renderings aligned to Greek | CC BY-SA 4.0 |
+
+Anything derived from the ULT or UST is shared under CC BY-SA 4.0. Copyrighted translations (ESV, NIV
+and others) are not used. No data, text or interface from Logos Bible Software is used.

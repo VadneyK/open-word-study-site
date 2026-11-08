@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open Word Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a short shelf of tools. A plain statement of what this is, then one row per tool with what it helps you see. */
+:root {
+  --paper: #f3f5f7; --sheet: #ffffff; --ink: #1c2430; --ink-2: #4a5566; --rule: #d9dee5; --focus: #2f5fb3; --accent: #2f62ad;
+  --greek: "Gentium Book Plus", "Gentium Plus", "Times New Roman", serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #12161c; --sheet: #1a2028; --ink: #e6eaf0; --ink-2: #a4aebb; --rule: #2c3540; --focus: #8fb3ff; --accent: #8fb3ff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #12161c; --sheet: #1a2028; --ink: #e6eaf0; --ink-2: #a4aebb; --rule: #2c3540; --focus: #8fb3ff; --accent: #8fb3ff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--body); }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 40px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font: 700 34px/1.1 var(--greek); margin: 0; }
+.verse { font: italic 19px/1.5 var(--greek); color: var(--ink-2); margin: 14px 0 0; }
+.verse span { font-style: normal; font-size: 14px; font-family: var(--body); }
+p.lede { margin: 18px 0 0; max-width: 62ch; }
+ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 10px; }
+a.tool { display: grid; grid-template-columns: 9em minmax(0, 1fr); gap: 4px 16px; text-decoration: none; color: var(--ink);
+  background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+a.tool:hover { border-color: var(--accent); }
+a.tool:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+a.tool b { font: 700 18px var(--greek); color: var(--accent); }
+a.tool span { color: var(--ink-2); font-size: 15px; }
+@media (max-width: 560px) { a.tool { grid-template-columns: minmax(0, 1fr); } }
+.note { margin-top: 32px; font-size: 13px; color: var(--ink-2); }
+</style>
+
+<div class="wrap">
+  <h1>Open Word Study</h1>
+  <p class="verse">“The Word became flesh and made His dwelling among us.” <span>John 1:14, BSB</span></p>
+  <p class="lede">Free tools for reading the Greek New Testament and the Hebrew Old Testament more closely, built only from open data. They are a side project and a work in progress, made to help people slow down with the words of Scripture. They are not a replacement for a full Bible software library, and feedback is very welcome.</p>
+  <ul>
+    <li><a class="tool" href="./word-study/"><b>Word Study</b><span>Any Greek word: where it appears, its forms, how open translations render it, and words translated the same way.</span></a></li>
+    <li><a class="tool" href="./hebrew/"><b>Hebrew Word Study</b><span>The same for every word of the Old Testament. Start with חֶסֶד, "loving devotion".</span></a></li>
+    <li><a class="tool" href="./wheel/"><b>Word Wheel</b><span>One word, every occurrence, a ring per translation. Start with σκηνόω, "to dwell".</span></a></li>
+    <li><a class="tool" href="./workbench/"><b>Passage Workbench</b><span>A passage word by word: rare words, repeated words, and where Greek editions differ.</span></a></li>
+    <li><a class="tool" href="./companion/"><b>Passage Companion</b><span>Read with the margin open: cross references readers found helpful, notes on hard phrases, people and places.</span></a></li>
+    <li><a class="tool" href="./lens/"><b>Grammar Lens</b><span>Color the commands, the aorists, or one word through a passage to see its shape.</span></a></li>
+    <li><a class="tool" href="./finder/"><b>Verse Finder</b><span>Verses that meet several conditions at once: words, people, places and grammar.</span></a></li>
+    <li><a class="tool" href="./factbook/"><b>Factbook</b><span>People, places and things the New Testament names, with every mention.</span></a></li>
+  </ul>
+  <p class="note">Data: STEPBible TAGNT, TAHOT and TIPNR (CC BY 4.0, Tyndale House Cambridge), Berean Standard Bible (public domain), unfoldingWord Literal and Simplified Texts and Translation Notes (CC BY-SA 4.0), OpenBible.info cross references (CC BY 4.0). Not affiliated with any Bible software company. Compiled by Kentaro Vadney.</p>
+</div>
+<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="./NOTICE.md">sources and licences</a>.</p>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;650;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #f3f1f1; --sheet: #ffffff; --ink: #1c1917; --ink-2: #473c39; --rule: rgba(71, 60, 57, 0.18); --focus: #0069a8;
+  --accent: #0069a8; --bar: #0069a8; --person: #0069a8; --place: #047857; --other: #a35f00;
+  --s1: #0069a8; --s2: #009966; --s3: #d48c00; --s4: #1d1816; --s5: #7a4f9e; --s6: #c2410c; --s7: #0e7490; --s8: #65a30d; --s9: #9f1239; --s0: #a89e93;
+  --l1: #b45309; --l2: #0069a8; --l3: #047857; --l4: #9f1239; --l5: #4d7c0f; --l6: #6d28d9;
+  --rare: #9f1239; --rep: #047857; --var: #a35f00; --c1: #0069a8; --c2: #a35f00; --c3: #047857; --c4: #9f1239;
+  --ot: #8a4b00; --nt: #0069a8; --note: #047857; --name: #9f1239;
+  --body: "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Archivo", system-ui, sans-serif;
+  --a2-ui: "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1d1816; --sheet: #241f1d; --ink: #e7e5e4; --ink-2: #d8d2d0; --rule: rgba(255, 255, 255, 0.14); --focus: #ffb800;
+  --accent: #6cb6ea; --bar: #6cb6ea; --person: #6cb6ea; --place: #34c38f; --other: #ffb800;
+  --s1: #6cb6ea; --s2: #34c38f; --s3: #ffb800; --s4: #d8d2d0; --s5: #c4a3e6; --s6: #f08a5d; --s7: #5fd3e6; --s8: #a3d65c; --s9: #f27a9a; --s0: #78716c;
+  --l1: #ffb800; --l2: #6cb6ea; --l3: #34c38f; --l4: #f27a9a; --l5: #a3d65c; --l6: #c4a3e6;
+  --rare: #f27a9a; --rep: #34c38f; --var: #ffb800; --c1: #6cb6ea; --c2: #ffb800; --c3: #34c38f; --c4: #f27a9a;
+  --ot: #ffb800; --nt: #6cb6ea; --note: #34c38f; --name: #f27a9a; color-scheme: dark; } }
+body { font-family: var(--body); }
+h1, h2 { font-family: var(--display) !important; font-weight: 650 !important; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important; }
+.panel, .box, .text, .words, .card, .cond { border-radius: 24px !important; }
+.label, .eyebrow, th { font-family: var(--a2-ui) !important; }
+.a2bar { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 12px auto 0;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 500 14px var(--a2-ui); }
+.a2bar a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.a2bar a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.a2bar span { color: var(--ink-2); }
+.a2foot { max-width: 1180px; margin: 0 auto 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  font: 13px/1.5 var(--a2-ui); color: var(--ink-2); }
+</style>
+
+</html>
