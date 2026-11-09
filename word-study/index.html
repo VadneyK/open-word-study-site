@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="description" content="Any Greek New Testament word: where it appears, its forms, and how open English translations render it.">
+<meta property="og:title" content="Greek Word Study">
+<meta property="og:description" content="Any Greek New Testament word: where it appears, its forms, and how open English translations render it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vadneyk.github.io/open-word-study-site/word-study/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%230069a8' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;650;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Greek Word Study</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one word, studied. Search on top; the word's card; where it lives (book chart), how it is carried into English (rings), its forms, and its neighbours. */
 :root {
@@ -38,6 +45,7 @@ h2 { font: 700 18px var(--greek); margin: 0 0 8px; }
   border-radius: 10px; list-style: none; margin: 0; padding: 4px; max-height: 320px; overflow: auto; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
 .results li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
 .results li[aria-selected="true"], .results li:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.nores { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .chip { border: 1px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 3px 10px; cursor: pointer; font: inherit; color: var(--ink); }
 .chip .gk { font-size: 16px; }
@@ -73,14 +81,59 @@ td.gk { font-size: 17px; }
 @media (prefers-reduced-motion: reduce) { .slice { transition: none; } }
 </style>
 
+
+<style>
+:root {
+  --paper: #f3f1f1; --sheet: #ffffff; --ink: #1c1917; --ink-2: #473c39; --rule: rgba(71, 60, 57, 0.18); --focus: #0069a8;
+  --accent: #0069a8; --bar: #0069a8; --person: #0069a8; --place: #047857; --other: #a35f00;
+  --s1: #0069a8; --s2: #009966; --s3: #d48c00; --s4: #1d1816; --s5: #7a4f9e; --s6: #c2410c; --s7: #0e7490; --s8: #65a30d; --s9: #9f1239; --s0: #a89e93;
+  --l1: #b45309; --l2: #0069a8; --l3: #047857; --l4: #9f1239; --l5: #4d7c0f; --l6: #6d28d9;
+  --rare: #9f1239; --rep: #047857; --var: #a35f00; --c1: #0069a8; --c2: #a35f00; --c3: #047857; --c4: #9f1239;
+  --ot: #8a4b00; --nt: #0069a8; --note: #047857; --name: #9f1239;
+  --body: "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Archivo", system-ui, sans-serif;
+  --a2-ui: "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1d1816; --sheet: #241f1d; --ink: #e7e5e4; --ink-2: #d8d2d0; --rule: rgba(255, 255, 255, 0.14); --focus: #ffb800;
+  --accent: #6cb6ea; --bar: #6cb6ea; --person: #6cb6ea; --place: #34c38f; --other: #ffb800;
+  --s1: #6cb6ea; --s2: #34c38f; --s3: #ffb800; --s4: #d8d2d0; --s5: #c4a3e6; --s6: #f08a5d; --s7: #5fd3e6; --s8: #a3d65c; --s9: #f27a9a; --s0: #78716c;
+  --l1: #ffb800; --l2: #6cb6ea; --l3: #34c38f; --l4: #f27a9a; --l5: #a3d65c; --l6: #c4a3e6;
+  --rare: #f27a9a; --rep: #34c38f; --var: #ffb800; --c1: #6cb6ea; --c2: #ffb800; --c3: #34c38f; --c4: #f27a9a;
+  --ot: #ffb800; --nt: #6cb6ea; --note: #34c38f; --name: #f27a9a; color-scheme: dark; } }
+body { font-family: var(--body); }
+h1, h2 { font-family: var(--display) !important; font-weight: 650 !important; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important; }
+.panel, .box, .text, .words, .card, .cond { border-radius: 24px !important; }
+.label, .eyebrow, th { font-family: var(--a2-ui) !important; }
+.a2bar { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 12px auto 0;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 500 14px var(--a2-ui); }
+.a2bar a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.a2bar a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.a2bar span { color: var(--ink-2); }
+.a2foot { max-width: 1180px; margin: 0 auto 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  font: 13px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload { max-width: 1180px; margin: 8px auto 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 14px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload a { color: inherit; }
+</style>
+<script>
+addEventListener('error', function (e) {
+  if (!e.filename || e.filename.split('#')[0] !== location.href.split('#')[0]) return;
+  window.owsFailed = true;
+  var s = document.getElementById('ows-load');
+  if (s) s.innerHTML = 'Something went wrong starting this tool. <a href="">Reload the page</a>, or try a newer browser.';
+});
+</script>
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
+<p class="owsload" id="ows-load" role="status">Loading the data for this tool. About 1.1 MB to download the first time.</p>
+<noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
 <div class="wrap">
   <h1>Greek Word Study</h1>
   <p class="lede">Every word of the Greek New Testament: where it appears, the forms it takes, how open English translations carry it, and other Greek words they translate the same way.</p>
   <div class="search">
     <label class="label" for="q">Find a word: Greek, English gloss, or Strong's number</label>
-    <input id="q" type="search" autocomplete="off" placeholder="σκηνόω, dwell, G4637" role="combobox" aria-expanded="false" aria-controls="res">
+    <input id="q" type="search" autocomplete="off" placeholder="σκηνόω, skenoo, dwell, G4637" role="combobox" aria-expanded="false" aria-controls="res">
     <ul class="results" id="res" role="listbox" hidden></ul>
+    <p class="nores" id="nores" role="status" hidden></p>
   </div>
   <div class="chips" id="chips" aria-label="Examples"></div>
 
@@ -124,7 +177,23 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&am
 const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f\u0591-\u05c7]/g, '').toLowerCase();
 const ref = n => `${NAMES[B[Math.floor(n / 1e6)]]} ${Math.floor(n / 1e3) % 1e3}:${n % 1e3}`;
 const PARSE = { pos: { N: 'noun', V: 'verb', A: 'adjective', T: 'article', PREP: 'preposition', ADV: 'adverb', CONJ: 'conjunction' } };
-const KEYS = Object.keys(L).map(k => ({ k, g: strip(L[k][0]), e: L[k][1].toLowerCase(), n: L[k][2].length }));
+// Latin spellings ("skenoo", "dikaiosyne", "hesed") find a word without a Greek or Hebrew keyboard.
+// LATIN-SEARCH-START
+const GK = { α:'a',β:'b',γ:'g',δ:'d',ε:'e',ζ:'z',η:'e',θ:'th',ι:'i',κ:'k',λ:'l',μ:'m',ν:'n',ξ:'x',ο:'o',π:'p',ρ:'r',σ:'s',ς:'s',τ:'t',υ:'u',φ:'ph',χ:'ch',ψ:'ps',ω:'o' };
+const HB = { ב:'b',ג:'g',ד:'d',ה:'h',ו:'b',ז:'z',ח:'h',ט:'t',י:'y',כ:'k',ך:'k',ל:'l',מ:'m',ם:'m',נ:'n',ן:'n',ס:'s',פ:'p',ף:'p',צ:'s',ץ:'s',ק:'k',ר:'r',ש:'s',ת:'t' };
+const latin = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
+const gkKey = g => Array.from(g.replace(/γ(?=[γκχξ])/g, 'n'), c => GK[c] || '').join('');
+const gkQuery = q => latin(q).replace(/^h/, '').replace(/rh/g, 'r').replace(/kh/g, 'ch').replace(/ks/g, 'x').replace(/f/g, 'ph').replace(/y/g, 'u').replace(/c(?!h)/g, 'k');
+// Hebrew is matched on consonants: with vav and yod as letters, and without them as vowel signs
+const heKeys = g => [Array.from(g, c => HB[c] || '').join(''), Array.from(g, c => c === 'ו' || c === 'י' ? '' : HB[c] || '').join('')];
+const heQueries = q => { const v = latin(q).replace(/sh/g, 's').replace(/t[sz]/g, 's').replace(/ph|f/g, 'p').replace(/th/g, 't').replace(/[vw]/g, 'b').replace(/q/g, 'k').replace(/j/g, 'y').replace(/[aeiou]/g, '');
+  return ['h', 'k'].map(x => v.replace(/[ck]h/g, x).replace(/c/g, 'k')); };
+const spellTier = (keys, q) => { // 0 exact spelling, 1 starts with it, -1 no match
+  if (HE) { let best = -1; for (const v of heQueries(q)) { const thin = v.replace(/y/g, ''); if (thin.length < 2) continue;
+      if (keys[0] === v || keys[1] === thin) return 0; if (thin.length >= 3 && (keys[0].startsWith(v) || keys[1].startsWith(thin))) best = 1; } return best; }
+  const v = gkQuery(q); if (v.length < 3) return -1; return keys[0] === v ? 0 : keys[0].startsWith(v) ? 1 : -1; };
+// LATIN-SEARCH-END
+const KEYS = Object.keys(L).map(k => ({ k, g: strip(L[k][0]), e: L[k][1].toLowerCase(), n: L[k][2].length, t: HE ? heKeys(strip(L[k][0])) : [gkKey(strip(L[k][0]))] }));
 let cur = DATA.start || 'G4637', sel = null;
 const STORE = DATA.lang === 'he' ? 'hws-cur' : 'gws-cur';
 try { const s = localStorage.getItem(STORE); if (s && L[s]) cur = s; } catch (e) {}
@@ -221,8 +290,17 @@ function search(q) {
   q = q.trim(); if (!q) return [];
   if (/^[gGhH]\d+/.test(q)) { const pre = q[0].toUpperCase() + String(parseInt(q.slice(1), 10)).padStart(4, '0'); return Object.keys(L).filter(k => k.startsWith(pre)).slice(0, 12); }
   const s = strip(q), greek = /[\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]/.test(q);
-  return KEYS.filter(x => greek ? x.g.startsWith(s) : x.e.split(/[^a-z]+/).some(w => w.startsWith(s.toLowerCase())))
-    .sort((a, b) => b.n - a.n).slice(0, 12).map(x => x.k);
+  if (greek) return KEYS.filter(x => x.g.startsWith(s)).sort((a, b) => b.n - a.n).slice(0, 12).map(x => x.k);
+  // Order: an exact Greek spelling, then English glosses, then partial spellings. Hebrew consonants are looser, so glosses come first there.
+  // An exact Hebrew spelling of three or more consonants (hesed) ranks with the glosses by frequency; two consonants (love = l-b) is too loose.
+  const firm = HE && heQueries(q)[0].replace(/y/g, '').length >= 3;
+  const tier = x => { const sp = spellTier(x.t, q), gl = x.e.split(/[^a-z]+/).some(w => w.startsWith(s));
+    if (!HE && sp === 0) return 0; if (gl || (firm && sp === 0)) return 1; return sp < 0 ? -1 : 2 + sp; };
+  return KEYS.map(x => [tier(x), x]).filter(p => p[0] >= 0).sort((a, b) => a[0] - b[0] || b[1].n - a[1].n).slice(0, 12).map(p => p[1].k);
+}
+function noResult(v) {
+  const box = $('nores'); v = v.trim(); box.hidden = !(v && !hits.length);
+  if (!box.hidden) box.textContent = `No word found for “${v}”. Try another spelling, an English word, or a number like ${HE ? 'H2617' : 'G4637'}.`;
 }
 function renderRes() {
   const ul = $('res');
@@ -230,8 +308,8 @@ function renderRes() {
   ul.innerHTML = hits.map((k, i) => `<li role="option" id="o${i}" aria-selected="${i === hi}" data-k="${k}"><span><span class="gk" style="font-size:17px">${esc(L[k][0])}</span> ${esc(L[k][1])}</span><span class="num">${k} · ${L[k][2].length}×</span></li>`).join('');
   ul.querySelectorAll('li').forEach(li => li.onmousedown = e => { e.preventDefault(); choose(li.dataset.k); });
 }
-function choose(k) { hits = []; renderRes(); $('q').value = ''; show(k); }
-$('q').addEventListener('input', e => { hits = search(e.target.value); hi = 0; renderRes(); });
+function choose(k) { hits = []; renderRes(); $('q').value = ''; noResult(''); show(k); }
+$('q').addEventListener('input', e => { hits = search(e.target.value); hi = 0; renderRes(); noResult(e.target.value); });
 $('q').addEventListener('keydown', e => {
   if (e.key === 'ArrowDown') { hi = Math.min(hits.length - 1, hi + 1); renderRes(); e.preventDefault(); }
   else if (e.key === 'ArrowUp') { hi = Math.max(0, hi - 1); renderRes(); e.preventDefault(); }
@@ -244,39 +322,7 @@ $('chips').querySelectorAll('button').forEach(b => b.onclick = () => show(b.data
 addEventListener('hashchange', () => { const k = location.hash.slice(1); if (L[k] && k !== cur) show(k); });
 show(cur);
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../NOTICE.md">sources and licences</a>.</p>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;650;700&family=Inter:wght@400;500;600&display=swap">
-<style>
-:root {
-  --paper: #f3f1f1; --sheet: #ffffff; --ink: #1c1917; --ink-2: #473c39; --rule: rgba(71, 60, 57, 0.18); --focus: #0069a8;
-  --accent: #0069a8; --bar: #0069a8; --person: #0069a8; --place: #047857; --other: #a35f00;
-  --s1: #0069a8; --s2: #009966; --s3: #d48c00; --s4: #1d1816; --s5: #7a4f9e; --s6: #c2410c; --s7: #0e7490; --s8: #65a30d; --s9: #9f1239; --s0: #a89e93;
-  --l1: #b45309; --l2: #0069a8; --l3: #047857; --l4: #9f1239; --l5: #4d7c0f; --l6: #6d28d9;
-  --rare: #9f1239; --rep: #047857; --var: #a35f00; --c1: #0069a8; --c2: #a35f00; --c3: #047857; --c4: #9f1239;
-  --ot: #8a4b00; --nt: #0069a8; --note: #047857; --name: #9f1239;
-  --body: "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Archivo", system-ui, sans-serif;
-  --a2-ui: "Inter", system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --paper: #1d1816; --sheet: #241f1d; --ink: #e7e5e4; --ink-2: #d8d2d0; --rule: rgba(255, 255, 255, 0.14); --focus: #ffb800;
-  --accent: #6cb6ea; --bar: #6cb6ea; --person: #6cb6ea; --place: #34c38f; --other: #ffb800;
-  --s1: #6cb6ea; --s2: #34c38f; --s3: #ffb800; --s4: #d8d2d0; --s5: #c4a3e6; --s6: #f08a5d; --s7: #5fd3e6; --s8: #a3d65c; --s9: #f27a9a; --s0: #78716c;
-  --l1: #ffb800; --l2: #6cb6ea; --l3: #34c38f; --l4: #f27a9a; --l5: #a3d65c; --l6: #c4a3e6;
-  --rare: #f27a9a; --rep: #34c38f; --var: #ffb800; --c1: #6cb6ea; --c2: #ffb800; --c3: #34c38f; --c4: #f27a9a;
-  --ot: #ffb800; --nt: #6cb6ea; --note: #34c38f; --name: #f27a9a; color-scheme: dark; } }
-body { font-family: var(--body); }
-h1, h2 { font-family: var(--display) !important; font-weight: 650 !important; letter-spacing: -0.01em; }
-h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important; }
-.panel, .box, .text, .words, .card, .cond { border-radius: 24px !important; }
-.label, .eyebrow, th { font-family: var(--a2-ui) !important; }
-.a2bar { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 12px auto 0;
-  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 500 14px var(--a2-ui); }
-.a2bar a { color: var(--ink); text-decoration: none; font-weight: 600; }
-.a2bar a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.a2bar span { color: var(--ink-2); }
-.a2foot { max-width: 1180px; margin: 0 auto 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  font: 13px/1.5 var(--a2-ui); color: var(--ink-2); }
-</style>
+<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>
