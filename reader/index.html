@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="description" content="Read the Bible in English with the Greek or Hebrew word under each English word. No Greek or Hebrew needed.">
+<meta property="og:title" content="Interlinear Reader">
+<meta property="og:description" content="Read the Bible in English with the Greek or Hebrew word under each English word. No Greek or Hebrew needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vadneyk.github.io/open-word-study-site/reader/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%230069a8' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;650;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Interlinear Reader</title>
+<style>
+/* Layout: an English page you can read straight through. Each word carries its original word underneath; tapping one opens a note at the edge of the page. */
+:root {
+  --greek: "Gentium Book Plus", "Gentium Plus", "Times New Roman", serif;
+  --hebrew: "SBL Hebrew", "Ezra SIL", "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { margin: 0; }
+.lede { margin: 8px 0 0; color: var(--ink-2); max-width: 64ch; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin-top: 18px; }
+.bar label.f { display: grid; gap: 2px; font: 500 13px var(--a2-ui); color: var(--ink-2); }
+select, .nav { font: 500 16px var(--a2-ui); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 10px; min-height: 42px; }
+.nav { cursor: pointer; }
+.nav:disabled { opacity: .45; cursor: not-allowed; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font: 14px var(--a2-ui); color: var(--ink-2); }
+.opts label { display: flex; gap: 6px; align-items: center; min-height: 28px; }
+select:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.status { margin: 14px 0 0; font: 14px var(--a2-ui); color: var(--ink-2); }
+.status button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; margin-top: 18px; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+.page { background: var(--sheet); border: 1px solid var(--rule); border-radius: 24px; padding: 20px; min-width: 0; }
+.page h2 { font-size: 20px; margin: 18px 0 8px; }
+.page h2:first-child { margin-top: 0; }
+.verse { display: flex; flex-wrap: wrap; gap: 4px 2px; align-items: flex-start; margin: 0 0 12px; padding: 4px; border-radius: 10px; }
+.verse.target { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.vn { font: 600 12px var(--mono); color: var(--ink-2); text-decoration: none; padding: 5px 4px 0 0; min-width: 24px; min-height: 24px; }
+.w { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0; font: inherit; color: var(--ink); background: none; border: 0; border-radius: 6px; padding: 2px 4px; cursor: pointer; text-align: left; min-height: 24px; }
+.w:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.w[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+.w .o { font: 17px/1.3 var(--greek); color: var(--ink-2); }
+.w .o[lang="he"], .big[lang="he"] { font-family: var(--hebrew); }
+.w .t { font: 12px/1.3 var(--mono); color: var(--ink-2); }
+.hide-o .w .o, .hide-t .w .t { display: none; }
+.detail { background: var(--sheet); border: 1px solid var(--rule); border-radius: 24px; padding: 16px 18px; position: sticky; top: 12px; }
+@media (max-width: 900px) { .detail { position: fixed; left: 8px; right: 8px; bottom: max(8px, env(safe-area-inset-bottom, 0px)); top: auto; z-index: 10; max-height: 46vh; overflow: auto; box-shadow: 0 8px 30px rgba(0,0,0,.25); } }
+.detail .eng { font: 600 15px var(--a2-ui); margin: 0; padding-right: 60px; }
+.detail .big { font: 700 32px/1.25 var(--greek); margin: 4px 0 0; }
+.detail .tr { font: 14px var(--mono); color: var(--ink-2); margin: 2px 0 0; }
+.detail .parse { margin: 8px 0 0; font-size: 14px; color: var(--ink-2); }
+.detail a { display: inline-block; margin-top: 10px; color: var(--accent); font-weight: 600; }
+.detail .close { position: absolute; top: 10px; right: 10px; font: 500 14px var(--a2-ui); color: var(--ink); background: none; border: 1px solid var(--rule); border-radius: 8px; padding: 4px 10px; min-height: 32px; cursor: pointer; }
+.hint { margin: 0; font-size: 14px; color: var(--ink-2); }
+.note { margin-top: 28px; font-size: 13px; color: var(--ink-2); max-width: 80ch; }
+</style>
+
+
+<style>
+:root {
+  --paper: #f3f1f1; --sheet: #ffffff; --ink: #1c1917; --ink-2: #473c39; --rule: rgba(71, 60, 57, 0.18); --focus: #0069a8;
+  --accent: #0069a8; --bar: #0069a8; --person: #0069a8; --place: #047857; --other: #a35f00;
+  --s1: #0069a8; --s2: #009966; --s3: #d48c00; --s4: #1d1816; --s5: #7a4f9e; --s6: #c2410c; --s7: #0e7490; --s8: #65a30d; --s9: #9f1239; --s0: #a89e93;
+  --l1: #b45309; --l2: #0069a8; --l3: #047857; --l4: #9f1239; --l5: #4d7c0f; --l6: #6d28d9;
+  --rare: #9f1239; --rep: #047857; --var: #a35f00; --c1: #0069a8; --c2: #a35f00; --c3: #047857; --c4: #9f1239;
+  --ot: #8a4b00; --nt: #0069a8; --note: #047857; --name: #9f1239;
+  --body: "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Archivo", system-ui, sans-serif;
+  --a2-ui: "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1d1816; --sheet: #241f1d; --ink: #e7e5e4; --ink-2: #d8d2d0; --rule: rgba(255, 255, 255, 0.14); --focus: #ffb800;
+  --accent: #6cb6ea; --bar: #6cb6ea; --person: #6cb6ea; --place: #34c38f; --other: #ffb800;
+  --s1: #6cb6ea; --s2: #34c38f; --s3: #ffb800; --s4: #d8d2d0; --s5: #c4a3e6; --s6: #f08a5d; --s7: #5fd3e6; --s8: #a3d65c; --s9: #f27a9a; --s0: #78716c;
+  --l1: #ffb800; --l2: #6cb6ea; --l3: #34c38f; --l4: #f27a9a; --l5: #a3d65c; --l6: #c4a3e6;
+  --rare: #f27a9a; --rep: #34c38f; --var: #ffb800; --c1: #6cb6ea; --c2: #ffb800; --c3: #34c38f; --c4: #f27a9a;
+  --ot: #ffb800; --nt: #6cb6ea; --note: #34c38f; --name: #f27a9a; color-scheme: dark; } }
+body { font-family: var(--body); }
+h1, h2 { font-family: var(--display) !important; font-weight: 650 !important; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important; }
+.panel, .box, .text, .words, .card, .cond { border-radius: 24px !important; }
+.label, .eyebrow, th { font-family: var(--a2-ui) !important; }
+.a2bar { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 12px auto 0;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 500 14px var(--a2-ui); }
+.a2bar a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.a2bar a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.a2bar span { color: var(--ink-2); }
+.a2foot { max-width: 1180px; margin: 0 auto 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  font: 13px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload { max-width: 1180px; margin: 8px auto 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 14px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload a { color: inherit; }
+</style>
+<script>
+addEventListener('error', function (e) {
+  if (!e.filename || e.filename.split('#')[0] !== location.href.split('#')[0]) return;
+  window.owsFailed = true;
+  var s = document.getElementById('ows-load');
+  if (s) s.innerHTML = 'Something went wrong starting this tool. <a href="">Reload the page</a>, or try a newer browser.';
+});
+</script>
+<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
+<p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
+<noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
+<div class="wrap">
+  <h1>Interlinear Reader</h1>
+  <p class="lede">Read the Bible in English with the Greek or Hebrew word under each English word. No Greek or Hebrew needed: tap a word to see what stands behind it.</p>
+  <div class="bar">
+    <label class="f">Book <select id="book"></select></label>
+    <label class="f">Chapter <select id="chap"></select></label>
+    <button class="nav" id="prev" type="button">Previous chapter</button>
+    <button class="nav" id="next" type="button">Next chapter</button>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" id="showO" checked> Greek or Hebrew under each word</label>
+    <label><input type="checkbox" id="showT"> Pronunciation letters</label>
+  </div>
+  <p class="status" id="status" role="status"></p>
+  <div class="layout">
+    <section class="page" id="text" aria-label="Chapter text"></section>
+    <aside class="detail" id="detail" aria-live="polite" aria-label="Selected word"><p class="hint">Tap any word to see the word behind it.</p></aside>
+  </div>
+  <p class="note">A free study aid from open data and a work in progress. English, Greek, Hebrew and word alignment: Berean Standard Bible and the Berean interlinear tables (public domain). The Greek is the tables' Nestle base text and the Hebrew is the Westminster Leningrad Codex text they use. Word order follows the English, so the Greek or Hebrew words are not in their original order, and words with no English of their own are left out. This is a reading aid, not a replacement for learning the languages or for a full Bible software library. Not affiliated with any Bible software company.</p>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const HINT = '<p class="hint">Tap any word to see the word behind it.</p>';
+let BOOKS = [], cur = { b: 'Jhn', c: 1, v: 0 }, data = null, run = 0, last = null;
+const book = c => BOOKS.find(x => x.c === c);
+
+function parseRef(s) { const m = s.match(/^([1-3]?[A-Za-z]+)\.(\d+)(?:\.(\d+))?$/); return m ? { b: m[1], c: +m[2], v: +(m[3] || 0) } : null; }
+function refOk(r) { const b = r && book(r.b); return !!b && r.c >= 1 && r.c <= b.ch; }
+function setHash() { const h = `#${cur.b}.${cur.c}${cur.v ? '.' + cur.v : ''}`; if (location.hash !== h) history.replaceState(null, '', h); try { localStorage.setItem('reader-at', h.slice(1)); } catch (e) {} }
+
+function controls() {
+  const b = book(cur.b);
+  $('book').value = cur.b;
+  $('chap').innerHTML = Array.from({ length: b.ch }, (_, i) => `<option${i + 1 === cur.c ? ' selected' : ''}>${i + 1}</option>`).join('');
+  const i = BOOKS.indexOf(b);
+  $('prev').disabled = i === 0 && cur.c === 1;
+  $('next').disabled = i === BOOKS.length - 1 && cur.c === b.ch;
+}
+
+function closeDetail() {
+  document.querySelectorAll('.w[aria-pressed="true"]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+  const d = $('detail');
+  d.innerHTML = HINT;
+  if (matchMedia('(max-width: 900px)').matches) d.hidden = true;
+  if (last) { last.focus(); last = null; }
+}
+
+async function load(r, note) {
+  const mine = ++run; cur = r; controls(); setHash();
+  const b = book(r.b), name = `${b.n} ${r.c}`;
+  $('status').textContent = `Loading ${name}…`; $('text').setAttribute('aria-busy', 'true');
+  try {
+    const res = await fetch(`data/${r.b}.${r.c}.json`);
+    if (!res.ok) throw new Error(res.status);
+    const d = await res.json();
+    if (mine !== run) return;
+    data = d; render(b); $('status').textContent = note || '';
+  } catch (e) {
+    if (mine !== run) return;
+    $('text').innerHTML = '';
+    $('status').innerHTML = `Could not load ${esc(name)}. Check your connection and <button type="button" id="retry">try again</button>.`;
+    $('retry').onclick = () => load(r);
+  }
+  $('text').removeAttribute('aria-busy');
+}
+
+function render(b) {
+  const lang = b.lang === 'he' ? 'he' : 'grc', dir = b.lang === 'he' ? ' dir="rtl"' : '';
+  $('text').innerHTML = `<h2>${esc(b.n === 'Psalms' ? 'Psalm' : b.n)} ${cur.c}</h2>` + data.v.map(([v, rows]) => {
+    const head = data.h[v] ? `<h2>${esc(data.h[v])}</h2>` : '';
+    const words = rows.map((w, i) => `<button class="w" type="button" aria-pressed="false" data-v="${v}" data-i="${i}"><span class="e">${esc(w[0])}</span> <span class="o" lang="${lang}"${dir}>${esc(w[1])}</span> <span class="t">${esc(w[2])}</span></button>`).join('');
+    return `${head}<div class="verse${v === cur.v ? ' target' : ''}" id="v${v}"><a class="vn" href="#${cur.b}.${cur.c}.${v}" aria-label="Verse ${v}">${v}</a>${words}</div>`;
+  }).join('');
+  closeDetail();
+  if (cur.v && $('v' + cur.v)) $('v' + cur.v).scrollIntoView({ block: 'center' }); else if (matchMedia('(max-width: 900px)').matches) scrollTo(0, 0);
+}
+
+function showWord(btn) {
+  document.querySelectorAll('.w[aria-pressed="true"]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+  btn.setAttribute('aria-pressed', 'true'); last = btn;
+  const rows = data.v.find(x => x[0] === +btn.dataset.v)[1], w = rows[+btn.dataset.i], b = book(cur.b), he = b.lang === 'he';
+  const page = he ? 'hebrew' : 'word-study', d = $('detail');
+  d.hidden = false;
+  d.innerHTML = `<button class="close" type="button" id="close">Close</button><p class="eng">${esc(w[0])}</p>` +
+    `<p class="big" lang="${he ? 'he' : 'grc'}"${he ? ' dir="rtl"' : ''}>${esc(w[1])}</p><p class="tr">${esc(w[2])}</p><p class="parse">${esc(data.p[w[3]])}${w[4] ? ` · Strong's ${esc(w[4])}` : ''}</p>` +
+    (w[4] ? `<a href="../${page}/#${esc(w[4])}">Study this word: every place it appears</a>` : `<p class="parse">No word study entry for this word yet.</p>`);
+  $('close').onclick = closeDetail;
+}
+
+function step(by) {
+  const b = book(cur.b), i = BOOKS.indexOf(b); let c = cur.c + by, x = b;
+  if (c < 1) { x = BOOKS[i - 1]; if (!x) return; c = x.ch; }
+  if (c > x.ch) { x = BOOKS[i + 1]; if (!x) return; c = 1; }
+  load({ b: x.c, c, v: 0 });
+}
+
+function prefs() {
+  $('text').classList.toggle('hide-o', !$('showO').checked);
+  $('text').classList.toggle('hide-t', !$('showT').checked);
+  try { localStorage.setItem('reader-opts', JSON.stringify([$('showO').checked, $('showT').checked])); } catch (e) {}
+}
+
+$('text').addEventListener('click', e => { const b = e.target.closest('.w'); if (b) showWord(b); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && $('detail').querySelector('#close')) closeDetail(); });
+$('book').onchange = () => load({ b: $('book').value, c: 1, v: 0 });
+$('chap').onchange = () => load({ b: cur.b, c: +$('chap').value, v: 0 });
+$('prev').onclick = () => step(-1);
+$('next').onclick = () => step(1);
+$('showO').onchange = prefs; $('showT').onchange = prefs;
+addEventListener('hashchange', () => { const r = parseRef(location.hash.slice(1)); if (refOk(r) && (r.b !== cur.b || r.c !== cur.c)) load(r); else if (refOk(r)) { cur = r; document.querySelectorAll('.verse.target').forEach(x => x.classList.remove('target')); const t = r.v && $('v' + r.v); if (t) { t.classList.add('target'); t.scrollIntoView({ block: 'center' }); } setHash(); } });
+
+(async function boot() {
+  try { const o = JSON.parse(localStorage.getItem('reader-opts') || 'null'); if (o) { $('showO').checked = o[0]; $('showT').checked = o[1]; } } catch (e) {}
+  prefs();
+  if (matchMedia('(max-width: 900px)').matches) $('detail').hidden = true;
+  try {
+    const res = await fetch('data/index.json');
+    if (!res.ok) throw new Error(res.status);
+    BOOKS = await res.json();
+  } catch (e) {
+    $('status').innerHTML = 'Could not load the list of books. Check your connection and <button type="button" id="retry">try again</button>.';
+    $('retry').onclick = () => location.reload();
+    return;
+  }
+  $('book').innerHTML = BOOKS.map(b => `<option value="${b.c}">${esc(b.n)}</option>`).join('');
+  const asked = parseRef(location.hash.slice(1));
+  if (refOk(asked)) return load(asked);
+  let saved = null; try { saved = parseRef(localStorage.getItem('reader-at') || ''); } catch (e) {}
+  const start = refOk(saved) ? saved : { b: 'Jhn', c: 1, v: 14 };
+  load(start, location.hash.length > 1 ? `That reference was not found, so this is ${refOk(saved) ? 'the last place you were reading' : 'John 1'}.` : '');
+})();
+</script>
+<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
+
+</html>
