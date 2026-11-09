@@ -77,6 +77,7 @@ td .hl { box-shadow: inset 0 -0.45em 0 color-mix(in srgb, var(--hl) 35%, transpa
 tr.hide { display: none; }
 .note { margin-top: 28px; font-size: 13px; color: var(--ink-2); max-width: 80ch; }
 .note a { color: inherit; }
+.detail a, td.ref a { color: var(--s1); }
 .tag { font: 12px var(--mono); }
 h1, h2 { font-family: var(--display); }
 body { font-family: var(--body); }
@@ -170,6 +171,7 @@ const SCOPE_NAMES = { NT: 'New Testament', Mat: 'Matthew', OT: 'Old Testament' }
 const BOOKS = { Mat:'Matthew',Mrk:'Mark',Luk:'Luke',Jhn:'John',Act:'Acts',Rom:'Romans','1Co':'1 Corinthians','2Co':'2 Corinthians',Gal:'Galatians',Eph:'Ephesians',Php:'Philippians',Col:'Colossians','1Th':'1 Thessalonians','2Th':'2 Thessalonians','1Ti':'1 Timothy','2Ti':'2 Timothy',Tit:'Titus',Phm:'Philemon',Heb:'Hebrews',Jas:'James','1Pe':'1 Peter','2Pe':'2 Peter','1Jn':'1 John','2Jn':'2 John','3Jn':'3 John',Jud:'Jude',Rev:'Revelation' };
 if (DATA.names) Object.assign(BOOKS, DATA.names);
 const nice = r => { const [b, cv] = r.split(' '); return (BOOKS[b] || b) + ' ' + cv; };
+const refLink = r => { const [b, cv] = r.split(' '); return `<a href="../reader/#${b}.${cv.replace(':', '.')}">${nice(r)}</a>`; };
 let state = { sk: Object.keys(DATA.lemmas)[0], scope: 'NT', sel: null };
 try { const s = JSON.parse(localStorage.getItem('ww-state') || 'null'); if (s && DATA.lemmas[s.sk]) state = { ...state, sk: s.sk, scope: DATA.lemmas[s.sk].scopes[s.scope] ? s.scope : Object.keys(DATA.lemmas[s.sk].scopes)[0] }; } catch (e) {}
 // Shareable links: #G1343/Mat opens that word and scope, and wins over the remembered state
@@ -278,7 +280,7 @@ function renderDetail(view, label) {
   if (!label) { d.textContent = 'Tap a slice or a row in the list.'; return; }
   const parts = RING_ORDER.slice().reverse().map(v => {
     const r = view.wheel.rings.find(x => x.version === v); const s = r && r.slices.find(x => x.label === label);
-    return s ? `<b>${v}</b> ${s.count}: ${s.refs.map(nice).join(', ')}` : `<b>${v}</b> 0`;
+    return s ? `<b>${v}</b> ${s.count}: ${s.refs.map(refLink).join(', ')}` : `<b>${v}</b> 0`;
   });
   d.innerHTML = `<b>“${label}”</b><br>` + parts.join('<br>');
 }
@@ -293,7 +295,7 @@ function renderTable(view, cm) {
     const n = (seen[o.ref] = (seen[o.ref] || 0) + 1) - 1;
     const labels = vs.map(v => (keyOf[v + '|' + o.ref] || [])[n]);
     const on = state.sel && labels.includes(state.sel);
-    return `<tr class="${state.sel && !on ? 'hide' : ''}"><td class="ref">${nice(o.ref)}</td><td class="gk">${o.greek}<small>${o.translit} · ${o.morph}</small></td>` +
+    return `<tr class="${state.sel && !on ? 'hide' : ''}"><td class="ref">${refLink(o.ref)}</td><td class="gk">${o.greek}<small>${o.translit} · ${o.morph}</small></td>` +
       vs.map((v, i) => { const txt = o.renderings[v] || '<span class="label">not aligned</span>'; const lab = labels[i];
         return `<td>${lab && lab === state.sel ? `<span class="hl" style="--hl:${cm.map[lab]}">${txt}</span>` : txt}</td>`; }).join('') + '</tr>';
   }).join('');

@@ -72,7 +72,7 @@ svg { display: block; width: 100%; height: auto; }
 .verses { list-style: none; padding: 0; margin: 0; }
 .verses li { padding: 9px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 12px; }
 @media (max-width: 560px) { .verses li { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
-.verses .r { font: 13px var(--mono); color: var(--ink-2); }
+.verses .r { font: 13px var(--mono); color: var(--accent, var(--ink-2)); }
 .verses .m { display: block; font-size: 13px; color: var(--ink-2); margin-top: 2px; }
 .more { margin-top: 10px; }
 .note { margin-top: 28px; font-size: 13px; color: var(--ink-2); max-width: 80ch; }
@@ -248,7 +248,7 @@ function run() {
 }
 function renderVerses() {
   const res = window.__res || [];
-  $('verses').innerHTML = res.slice(0, shown).map(v => `<li><span class="r">${esc(ref(v[0]))}</span><span>${esc(v[1]) || '<span class="num">no BSB text</span>'}</span></li>`).join('');
+  $('verses').innerHTML = res.slice(0, shown).map(v => `<li><a class="r" href="../reader/#${D.books[Math.floor(v[0] / 1e6)]}.${Math.floor(v[0] / 1e3) % 1e3}.${v[0] % 1e3}">${esc(ref(v[0]))}</a><span>${esc(v[1]) || '<span class="num">no BSB text</span>'}</span></li>`).join('');
   $('more').hidden = res.length <= shown; $('more').textContent = `Show more (${res.length - shown} left)`;
 }
 $('more').onclick = () => { shown += 100; renderVerses(); };

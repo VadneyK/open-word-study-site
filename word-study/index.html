@@ -71,6 +71,7 @@ svg { display: block; width: 100%; height: auto; }
 .sw { width: 12px; height: 12px; border-radius: 3px; }
 @media (max-width: 560px) { .legend > div { grid-template-columns: 12px minmax(0, 1fr); } .legend .num { grid-column: 2; white-space: normal; } }
 .refs { font: 13px var(--mono); color: var(--ink-2); margin-top: 10px; max-height: 9.5em; overflow: auto; }
+.refs a { color: var(--bar); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
 td, th { padding: 5px 6px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
 th { font: 500 11px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); }
@@ -178,6 +179,7 @@ const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (c
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f\u0591-\u05c7]/g, '').toLowerCase();
 const ref = n => `${NAMES[B[Math.floor(n / 1e6)]]} ${Math.floor(n / 1e3) % 1e3}:${n % 1e3}`;
+const refLink = n => `<a href="../reader/#${B[Math.floor(n / 1e6)]}.${Math.floor(n / 1e3) % 1e3}.${n % 1e3}">${ref(n)}</a>`;
 const PARSE = { pos: { N: 'noun', V: 'verb', A: 'adjective', T: 'article', PREP: 'preposition', ADV: 'adverb', CONJ: 'conjunction' } };
 // Latin spellings ("skenoo", "dikaiosyne", "hesed") find a word without a Greek or Hebrew keyboard.
 // LATIN-SEARCH-START
@@ -280,9 +282,9 @@ function drawRings() {
     return `<div tabindex="0" role="button" data-l="${esc(l)}" class="${l === sel ? 'on' : ''}"><span class="sw" style="background:${cm.m[l]}"></span><span>${esc(l)}</span><span class="num">${per}</span></div>`;
   }).join('');
   $('legend').querySelectorAll('div').forEach(li => { li.onclick = () => pick(li.dataset.l); li.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(li.dataset.l); } }; });
-  if (!sel) { $('refs').textContent = N <= 40 ? 'All: ' + occ.map(ref).join(', ') : `Tap a slice to list where each translation says it. First: ${ref(occ[0])}.`; return; }
+  if (!sel) { $('refs').innerHTML = N <= 40 ? 'All: ' + occ.map(refLink).join(', ') : `Tap a slice to list where each translation says it. First: ${ref(occ[0])}.`; return; }
   $('refs').innerHTML = LEG.map(v => { const [top, idx] = rings[v], j = top.indexOf(sel); const rs = j < 0 ? [] : occ.filter((_, i) => idx[i] === j);
-    return `<b>${v}</b> ${rs.length}${rs.length ? ': ' + rs.slice(0, 60).map(ref).join(', ') + (rs.length > 60 ? ' …' : '') : ''}`; }).join('<br>');
+    return `<b>${v}</b> ${rs.length}${rs.length ? ': ' + rs.slice(0, 60).map(refLink).join(', ') + (rs.length > 60 ? ' …' : '') : ''}`; }).join('<br>');
 }
 function pick(l) { sel = sel === l ? null : l; drawRings(); }
 
