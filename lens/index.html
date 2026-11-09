@@ -194,7 +194,7 @@ function renderLenses() {
 function renderText() {
   const P = DATA.passages[state.p];
   $('text').innerHTML = P.verses.map((v, vi) => `<div class="verse"><div class="vref">${esc(v[0])}</div>` +
-    v[1].map((w, wi) => `<span class="w" tabindex="0" role="button" data-v="${vi}" data-w="${wi}" aria-label="${esc(w[0])}, ${esc(w[2])}"><span class="g">${esc(w[0])}</span><span class="e">${esc(w[3] || w[2])}</span></span>`).join('') + '</div>').join('');
+    v[1].map((w, wi) => `<span class="w" tabindex="0" role="button" data-v="${vi}" data-w="${wi}"><span class="g">${esc(w[0])}</span> <span class="e">${esc(w[3] || w[2])}</span></span>`).join('') + '</div>').join('');
   $('text').querySelectorAll('.w').forEach(el => {
     const pick = () => select(+el.dataset.v, +el.dataset.w);
     el.addEventListener('click', pick);

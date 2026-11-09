@@ -47,7 +47,8 @@ svg#wheel { width: 100%; height: auto; display: block; max-width: 520px; margin:
 .slice { cursor: pointer; transition: opacity .18s ease, transform .18s ease; transform-box: view-box; transform-origin: 50% 50%; }
 .dim .slice { opacity: .18; }
 .dim .slice.on { opacity: 1; }
-.ringname { font: 500 10.5px var(--mono); fill: var(--ink-2); letter-spacing: .04em; }
+.ringname { font: 600 12px var(--mono); fill: var(--ink); letter-spacing: .04em; paint-order: stroke; stroke: var(--sheet); stroke-width: 3.5px; stroke-linejoin: round; }
+.key { margin: 10px 0 0; font-size: 13px; color: var(--ink-2); }
 .center-gk { font: 700 30px var(--greek); fill: var(--ink); }
 .center-sub { font: italic 15px var(--greek); fill: var(--ink-2); }
 .center-n { font: 500 12px var(--mono); fill: var(--ink-2); }
@@ -146,6 +147,7 @@ addEventListener('error', function (e) {
   <div class="grid">
     <section class="panel" aria-label="Translation wheel">
       <svg id="wheel" viewBox="0 0 520 520" role="group" aria-label="Translation wheel"></svg>
+      <p class="key" id="key"></p>
       <div class="legend" id="legend" role="group" aria-label="Renderings"></div>
       <div class="detail" id="detail" aria-live="polite">Tap a slice or a row in the list.</div>
     </section>
@@ -311,6 +313,7 @@ function render(keepWheel) {
   const view = DATA.lemmas[state.sk].scopes[state.scope], cm = colorMap(view);
   RING_ORDER = RING_ALL.filter(v => view.wheel.rings.some(r => r.version === v));
   renderControls();
+  $('key').textContent = 'Rings, outside to inside: ' + RING_ORDER.slice().reverse().map(v => `${v} (${NAMES[v]})`).join(', ') + '.';
   if (!keepWheel) renderWheel(view, cm); else preview(null);
   renderLegend(view, cm); renderDetail(view, state.sel); renderTable(view, cm);
 }

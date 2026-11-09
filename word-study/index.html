@@ -63,7 +63,8 @@ svg { display: block; width: 100%; height: auto; }
 .bars .v { fill: var(--ink); }
 .slice { cursor: pointer; transition: opacity .15s ease; }
 .dim .slice { opacity: .2; } .dim .slice.on { opacity: 1; }
-.ringname { font: 500 10px var(--mono); fill: var(--ink-2); }
+.ringname { font: 600 11.5px var(--mono); fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 3.5px; stroke-linejoin: round; }
+.key { margin: 10px 0 0; font-size: 13px; color: var(--ink-2); }
 .legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 3px; }
 .legend > div { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 3px 6px; border-radius: 6px; cursor: pointer; }
 .legend > div.on, .legend > div:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
@@ -142,6 +143,7 @@ addEventListener('error', function (e) {
     <div class="stack">
       <section class="box" aria-labelledby="h-eng"><h2 id="h-eng">How it is translated</h2><div class="label">each ring is one translation; tap a slice</div>
         <svg id="rings" viewBox="0 0 440 440" role="group" aria-label="Rendering rings"></svg>
+        <p class="key" id="key"></p>
         <div class="legend" id="legend" role="group" aria-label="Renderings"></div>
         <div class="refs" id="refs" aria-live="polite" tabindex="0" role="region" aria-label="Verses for the selected rendering"></div>
       </section>
@@ -317,6 +319,8 @@ $('q').addEventListener('keydown', e => {
   else if (e.key === 'Escape') { hits = []; renderRes(); }
 });
 $('q').addEventListener('blur', () => setTimeout(() => { hits = []; renderRes(); }, 100));
+const RING_NAMES = { BSB: 'Berean Standard Bible', ULT: 'unfoldingWord Literal', UST: 'unfoldingWord Simplified', TAGNT: 'STEPBible gloss', TAHOT: 'STEPBible gloss' };
+$('key').textContent = 'Rings, outside to inside: ' + LEG.map(v => `${v} (${RING_NAMES[v] || v})`).join(', ') + '.';
 $('chips').innerHTML = (DATA.chips || ['G4637', 'G1343', 'G0026', 'G5485', 'G4102', 'G3056', 'G2222', 'G1680']).filter(k => L[k]).map(k => `<button class="chip" data-k="${k}"><span class="gk">${esc(L[k][0])}</span> <span class="num">${esc(L[k][1])}</span></button>`).join('');
 $('chips').querySelectorAll('button').forEach(b => b.onclick = () => show(b.dataset.k));
 addEventListener('hashchange', () => { const k = location.hash.slice(1); if (L[k] && k !== cur) show(k); });
