@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="description" content="See how three open English translations say the same New Testament verse, and trace differences back to the Greek.">
+<meta property="og:title" content="Compare Translations">
+<meta property="og:description" content="See how three open English translations say the same New Testament verse, and trace differences back to the Greek.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vadneyk.github.io/open-word-study-site/compare/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%230069a8' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;650;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compare Translations</title>
+<style>
+/* Layout: one card per verse. Three open translations stacked, words that differ from the chosen one underlined, and under each verse the same words traced through the Greek. */
+:root { --greek: "Gentium Book Plus", "Gentium Plus", "Times New Roman", serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
+.wrap { max-width: 900px; margin: 0 auto; padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { margin: 0; }
+.lede { margin: 8px 0 0; color: var(--ink-2); max-width: 64ch; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin-top: 18px; }
+.bar label.f { display: grid; gap: 2px; font: 500 13px var(--a2-ui); color: var(--ink-2); }
+select, .nav { font: 500 16px var(--a2-ui); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 10px; min-height: 42px; }
+.nav { cursor: pointer; }
+.nav:disabled { opacity: .45; cursor: not-allowed; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font: 14px var(--a2-ui); color: var(--ink-2); }
+.opts label { display: flex; gap: 6px; align-items: center; min-height: 28px; }
+select:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.status { margin: 14px 0 0; font: 14px var(--a2-ui); color: var(--ink-2); }
+.status button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.sum { margin: 14px 0 0; font-size: 15px; }
+.sum b { font-weight: 650; }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 24px; padding: 16px 18px; margin-top: 12px; }
+.card.target { border-color: var(--accent); border-width: 2px; }
+.ref { font: 600 13px var(--mono); color: var(--accent); }
+.tr { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 2px 8px; margin-top: 8px; }
+.tr .who { font: 600 13px/1.6 var(--mono); color: var(--ink-2); }
+.tr .pct { grid-column: 2; font: 12px var(--mono); color: var(--ink-2); }
+mark { background: color-mix(in srgb, var(--accent) 16%, transparent); color: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; border-radius: 3px; }
+details { margin-top: 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
+summary { cursor: pointer; font: 500 14px var(--a2-ui); color: var(--ink-2); min-height: 28px; }
+.row { display: grid; grid-template-columns: minmax(0, 8em) minmax(0, 1fr); gap: 2px 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.row:last-child { border-bottom: 0; }
+.row.same-only { opacity: 1; }
+.only-diff .row:not(.diff) { display: none; }
+.gk { font: 17px/1.4 var(--greek); }
+.gk a { color: var(--accent); }
+.row dl { margin: 0; display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 0 8px; font-size: 14px; }
+.row dt { font: 12px/1.7 var(--mono); color: var(--ink-2); }
+.row dd { margin: 0; }
+.tag { display: block; font: 12px var(--mono); color: var(--ink-2); }
+.na { color: var(--ink-2); font-size: 13px; }
+.note { margin-top: 28px; font-size: 13px; color: var(--ink-2); max-width: 80ch; }
+</style>
+
+
+<style>
+:root {
+  --paper: #f3f1f1; --sheet: #ffffff; --ink: #1c1917; --ink-2: #473c39; --rule: rgba(71, 60, 57, 0.18); --focus: #0069a8;
+  --accent: #0069a8; --bar: #0069a8; --person: #0069a8; --place: #047857; --other: #a35f00;
+  --s1: #0069a8; --s2: #009966; --s3: #d48c00; --s4: #1d1816; --s5: #7a4f9e; --s6: #c2410c; --s7: #0e7490; --s8: #65a30d; --s9: #9f1239; --s0: #a89e93;
+  --l1: #b45309; --l2: #0069a8; --l3: #047857; --l4: #9f1239; --l5: #4d7c0f; --l6: #6d28d9;
+  --rare: #9f1239; --rep: #047857; --var: #a35f00; --c1: #0069a8; --c2: #a35f00; --c3: #047857; --c4: #9f1239;
+  --ot: #8a4b00; --nt: #0069a8; --note: #047857; --name: #9f1239;
+  --body: "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Archivo", system-ui, sans-serif;
+  --a2-ui: "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #1d1816; --sheet: #241f1d; --ink: #e7e5e4; --ink-2: #d8d2d0; --rule: rgba(255, 255, 255, 0.14); --focus: #ffb800;
+  --accent: #6cb6ea; --bar: #6cb6ea; --person: #6cb6ea; --place: #34c38f; --other: #ffb800;
+  --s1: #6cb6ea; --s2: #34c38f; --s3: #ffb800; --s4: #d8d2d0; --s5: #c4a3e6; --s6: #f08a5d; --s7: #5fd3e6; --s8: #a3d65c; --s9: #f27a9a; --s0: #78716c;
+  --l1: #ffb800; --l2: #6cb6ea; --l3: #34c38f; --l4: #f27a9a; --l5: #a3d65c; --l6: #c4a3e6;
+  --rare: #f27a9a; --rep: #34c38f; --var: #ffb800; --c1: #6cb6ea; --c2: #ffb800; --c3: #34c38f; --c4: #f27a9a;
+  --ot: #ffb800; --nt: #6cb6ea; --note: #34c38f; --name: #f27a9a; color-scheme: dark; } }
+body { font-family: var(--body); }
+h1, h2 { font-family: var(--display) !important; font-weight: 650 !important; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important; }
+.panel, .box, .text, .words, .card, .cond { border-radius: 24px !important; }
+.label, .eyebrow, th { font-family: var(--a2-ui) !important; }
+.a2bar { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 12px auto 0;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 500 14px var(--a2-ui); }
+.a2bar a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.a2bar a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.a2bar span { color: var(--ink-2); }
+.a2foot { max-width: 1180px; margin: 0 auto 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  font: 13px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload { max-width: 1180px; margin: 8px auto 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 14px/1.5 var(--a2-ui); color: var(--ink-2); }
+.owsload a { color: inherit; }
+</style>
+<script>
+addEventListener('error', function (e) {
+  if (!e.filename || e.filename.split('#')[0] !== location.href.split('#')[0]) return;
+  window.owsFailed = true;
+  var s = document.getElementById('ows-load');
+  if (s) s.innerHTML = 'Something went wrong starting this tool. <a href="">Reload the page</a>, or try a newer browser.';
+});
+</script>
+<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
+<p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
+<noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
+<div class="wrap">
+  <h1>Compare Translations</h1>
+  <p class="lede">See how three open English translations of the New Testament say the same verse, and trace any difference back to the Greek word behind it.</p>
+  <div class="bar">
+    <label class="f">Book <select id="book"></select></label>
+    <label class="f">Chapter <select id="chap"></select></label>
+    <label class="f">Compare against <select id="base"><option value="1">BSB</option><option value="2">ULT</option><option value="3">UST</option></select></label>
+    <button class="nav" id="prev" type="button">Previous chapter</button>
+    <button class="nav" id="next" type="button">Next chapter</button>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" id="sortD"> Most different verses first</label>
+    <label><input type="checkbox" id="onlyD" checked> Greek list: only words translated differently</label>
+  </div>
+  <p class="status" id="status" role="status"></p>
+  <p class="sum" id="sum"></p>
+  <div id="text"></div>
+  <p class="note">A free study aid from open data and a work in progress. New Testament only for now, because that is where these translations are aligned to the Greek here. BSB: Berean Standard Bible (public domain). ULT and UST: unfoldingWord Literal and Simplified Texts (CC BY-SA 4.0); their curly braces mark words the translators supplied. Greek: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). Underlined words are ones not found, in order, in the translation you compare against. The percentage is a rough measure of wording, not of meaning: a simplified translation will score high on purpose, and a high score does not mean a translation is wrong. Not affiliated with any Bible software company.</p>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const NAMES = ['', 'BSB', 'ULT', 'UST'], FULL = { BSB: 'Berean Standard', ULT: 'unfoldingWord Literal', UST: 'unfoldingWord Simplified' };
+let BOOKS = [], cur = { b: 'Mat', c: 5, v: 0 }, data = null, run = 0;
+const book = c => BOOKS.find(x => x.c === c);
+
+// DIFF-START
+const norm = w => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+const tokens = s => (s.match(/\S+/g) || []).map(t => ({ t, n: norm(t) })).filter(x => x.n);
+// Longest common subsequence of words: which words of b also appear, in order, in a.
+function common(a, b) {
+  const m = a.length, n = b.length, L = Array.from({ length: m + 1 }, () => new Uint16Array(n + 1));
+  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) L[i][j] = a[i].n === b[j].n ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  const kept = new Set(); let i = 0, j = 0;
+  while (i < m && j < n) { if (a[i].n === b[j].n) { kept.add(j); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+  return kept;
+}
+function difference(baseText, otherText) {
+  const a = tokens(baseText), b = tokens(otherText);
+  if (!a.length || !b.length) return { pct: null, kept: new Set(), b };
+  const kept = common(a, b);
+  return { pct: Math.round((1 - 2 * kept.size / (a.length + b.length)) * 100), kept, b };
+}
+// DIFF-END
+
+function parseRef(s) { const m = s.match(/^([1-3]?[A-Za-z]+)\.(\d+)(?:\.(\d+))?$/); return m ? { b: m[1], c: +m[2], v: +(m[3] || 0) } : null; }
+function refOk(r) { const b = r && book(r.b); return !!b && r.c >= 1 && r.c <= b.ch; }
+function setHash() { const h = `#${cur.b}.${cur.c}${cur.v ? '.' + cur.v : ''}`; if (location.hash !== h) history.replaceState(null, '', h); }
+function controls() {
+  const b = book(cur.b), i = BOOKS.indexOf(b);
+  $('book').value = cur.b;
+  $('chap').innerHTML = Array.from({ length: b.ch }, (_, k) => `<option${k + 1 === cur.c ? ' selected' : ''}>${k + 1}</option>`).join('');
+  $('prev').disabled = i === 0 && cur.c === 1;
+  $('next').disabled = i === BOOKS.length - 1 && cur.c === b.ch;
+}
+
+async function load(r, note) {
+  const mine = ++run; cur = r; controls(); setHash();
+  const name = `${book(r.b).n} ${r.c}`;
+  $('status').textContent = `Loading ${name}…`;
+  try {
+    const res = await fetch(`data/${r.b}.${r.c}.json`);
+    if (!res.ok) throw new Error(res.status);
+    const d = await res.json();
+    if (mine !== run) return;
+    data = d; render(); $('status').textContent = note || '';
+  } catch (e) {
+    if (mine !== run) return;
+    $('text').innerHTML = ''; $('sum').textContent = '';
+    $('status').innerHTML = `Could not load ${esc(name)}. Check your connection and <button type="button" id="retry">try again</button>.`;
+    $('retry').onclick = () => load(r);
+  }
+}
+
+function marked(d) {
+  return d.b.map((x, i) => d.kept.has(i) ? esc(x.t) : `<mark>${esc(x.t)}</mark>`).join(' ');
+}
+
+function greekList(words, v) {
+  if (!words.length) return '';
+  const diff = words.filter(w => w[5]).length;
+  const rows = words.map(w => {
+    const gk = w[1] ? `<a href="../word-study/#${esc(w[1])}" lang="grc">${esc(w[0])}</a>` : `<span lang="grc">${esc(w[0])}</span>`;
+    const dd = i => w[i] ? esc(w[i]) : '<span class="na">not aligned</span>';
+    return `<div class="row${w[5] ? ' diff' : ''}"><div class="gk">${gk}${w[5] ? '<span class="tag">translated differently</span>' : ''}</div><dl><dt>BSB</dt><dd>${dd(2)}</dd><dt>ULT</dt><dd>${dd(3)}</dd><dt>UST</dt><dd>${dd(4)}</dd></dl></div>`;
+  }).join('');
+  return `<details${v === cur.v ? ' open' : ''}><summary>Through the Greek: ${diff} of ${words.length} words translated differently</summary><div class="list">${rows}</div></details>`;
+}
+
+function render() {
+  const base = +$('base').value, others = [1, 2, 3].filter(x => x !== base), totals = {};
+  others.forEach(o => totals[o] = [0, 0]);
+  let verses = data.v.map(v => {
+    const ds = {}; others.forEach(o => { ds[o] = difference(v[base], v[o]); if (ds[o].pct != null) { totals[o][0] += ds[o].pct; totals[o][1]++; } });
+    const known = others.map(o => ds[o].pct).filter(x => x != null);
+    return { v, ds, score: known.length ? Math.max(...known) : -1 };
+  });
+  if ($('sortD').checked) verses = verses.slice().sort((a, b) => b.score - a.score);
+  $('sum').innerHTML = `In ${esc(book(cur.b).n)} ${cur.c}, compared with the <b>${NAMES[base]}</b>: ` + others.map(o => `<b>${NAMES[o]}</b> averages ${totals[o][1] ? Math.round(totals[o][0] / totals[o][1]) : 0}% different wording`).join(', ') + '.';
+  $('text').innerHTML = verses.map(({ v, ds }) => {
+    const lines = [1, 2, 3].map(t => {
+      if (!v[t]) return `<div class="tr"><span class="who" title="${FULL[NAMES[t]]}">${NAMES[t]}</span><span class="na">Not in this translation's text.</span></div>`;
+      if (t === base) return `<div class="tr"><span class="who" title="${FULL[NAMES[t]]}">${NAMES[t]}</span><span>${esc(v[t])}</span></div>`;
+      const d = ds[t];
+      return `<div class="tr"><span class="who" title="${FULL[NAMES[t]]}">${NAMES[t]}</span><span>${d.pct == null ? esc(v[t]) : marked(d)}</span>${d.pct == null ? '' : `<span class="pct">${d.pct}% different wording</span>`}</div>`;
+    }).join('');
+    return `<article class="card${v[0] === cur.v ? ' target' : ''}" id="v${v[0]}"><a class="ref" href="../reader/#${cur.b}.${cur.c}.${v[0]}" aria-label="${esc(book(cur.b).n)} ${cur.c}:${v[0]}, open in the Interlinear Reader">${esc(book(cur.b).n)} ${cur.c}:${v[0]}</a>${lines}${greekList(v[4], v[0])}</article>`;
+  }).join('');
+  if (cur.v && $('v' + cur.v)) $('v' + cur.v).scrollIntoView({ block: 'start' });
+}
+
+function step(by) {
+  const b = book(cur.b), i = BOOKS.indexOf(b); let c = cur.c + by, x = b;
+  if (c < 1) { x = BOOKS[i - 1]; if (!x) return; c = x.ch; }
+  if (c > x.ch) { x = BOOKS[i + 1]; if (!x) return; c = 1; }
+  load({ b: x.c, c, v: 0 });
+}
+const onlyDiff = () => $('text').classList.toggle('only-diff', $('onlyD').checked);
+
+$('book').onchange = () => load({ b: $('book').value, c: 1, v: 0 });
+$('chap').onchange = () => load({ b: cur.b, c: +$('chap').value, v: 0 });
+$('base').onchange = () => { if (data) render(); };
+$('sortD').onchange = () => { if (data) render(); };
+$('onlyD').onchange = onlyDiff;
+$('prev').onclick = () => step(-1);
+$('next').onclick = () => step(1);
+addEventListener('hashchange', () => { const r = parseRef(location.hash.slice(1)); if (refOk(r) && (r.b !== cur.b || r.c !== cur.c || r.v !== cur.v)) load(r); });
+
+(async function boot() {
+  onlyDiff();
+  try {
+    const res = await fetch('data/index.json');
+    if (!res.ok) throw new Error(res.status);
+    BOOKS = await res.json();
+  } catch (e) {
+    $('status').innerHTML = 'Could not load the list of books. Check your connection and <button type="button" id="retry">try again</button>.';
+    $('retry').onclick = () => location.reload();
+    return;
+  }
+  $('book').innerHTML = BOOKS.map(b => `<option value="${b.c}">${esc(b.n)}</option>`).join('');
+  const asked = parseRef(location.hash.slice(1));
+  if (refOk(asked)) return load(asked);
+  load({ b: 'Mat', c: 5, v: 6 }, location.hash.length > 1 ? 'That reference was not found, so this is Matthew 5.' : '');
+})();
+</script>
+<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
+
+</html>
