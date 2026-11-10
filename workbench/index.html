@@ -59,6 +59,7 @@ table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14p
 th { text-align: left; font: 500 11px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2);
   padding: 6px 8px; border-bottom: 1px solid var(--rule); }
 td { padding: 6px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+#astatus button { font: inherit; color: var(--accent, inherit); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 tr.vrow a, .vnote a { color: var(--accent, inherit); }
 tr.vrow td { font: 600 12px var(--mono); color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
 td.g { font: 18px var(--greek); white-space: nowrap; }
@@ -122,6 +123,12 @@ addEventListener('error', function (e) {
     <label class="label" for="psg">Passage</label>
     <select id="psg"></select>
   </div>
+  <div class="row" id="anyrow" hidden>
+    <label class="label" for="abook">Or any chapter</label>
+    <select id="abook" aria-label="Book"></select>
+    <select id="achap" aria-label="Chapter"></select>
+  </div>
+  <p class="label" id="astatus" role="status" style="text-transform:none;letter-spacing:0;font-size:14px;margin:8px 0 0"></p>
 
   <div class="notice">
     <section class="box" style="--k:var(--rare)" aria-labelledby="h-rare"><h2 id="h-rare">Rare words</h2><div class="label">10 or fewer times in the NT</div><ul id="rare"></ul></section>
@@ -146,6 +153,7 @@ const nice = r => { const [b, cv] = r.split(' '); return (BOOKS[b] || b) + ' ' +
 const hash = r => { const [b, cv] = r.split(' '); return b + '.' + cv.replace(':', '.'); };
 const rlink = r => `<a href="../reader/#${hash(r)}">${esc(nice(r))}</a>`;
 let cur = 0;
+const PRESETS = DATA.length;
 try { const s = +localStorage.getItem('pw-psg'); if (DATA[s]) cur = s; } catch (e) {}
 function parse(m) {
   return ['tense', 'voice', 'mood', 'person', 'case', 'number', 'gender'].filter(k => m[k]).map(k => m[k]).join(' ') || m.pos;
@@ -170,10 +178,54 @@ function render() {
   });
   $('tbl').tBodies[0].innerHTML = rows.join('');
 }
-$('psg').innerHTML = DATA.map((g, i) => `<option value="${i}">${esc(g.name)}</option>`).join('');
-$('psg').value = cur;
-$('psg').onchange = e => { cur = +e.target.value; try { localStorage.setItem('pw-psg', cur); } catch (err) {} render(); };
+function picker() { $('psg').innerHTML = DATA.map((g, i) => `<option value="${i}">${esc(g.name)}</option>`).join(''); $('psg').value = cur; }
+picker();
+$('psg').onchange = e => { cur = +e.target.value; try { if (cur < PRESETS) localStorage.setItem('pw-psg', cur); } catch (err) {}
+  history.replaceState(null, '', /^\w+\.\d+$/.test(DATA[cur].range) ? '#' + DATA[cur].range : location.pathname + location.search); render(); };
 render();
+// Any New Testament chapter (website build): one compact file per chapter, unpacked into the same shape as the presets.
+// UNPACK-START
+const WORD = ['greek', 'translit', 'lemma', 'strongs', 'gloss', 'lex_gloss', 'morph', 'nt_count', 'book_count', 'passage_count', 'rare', 'BSB', 'ULT', 'UST', 'not_in', 'instead', 'spelling'];
+function unpack(d, range, name) {
+  const verses = d.v.map(([ref, ws]) => ({ ref, words: ws.map(a => { const w = {}; WORD.forEach((k, i) => { w[k] = a[i]; });
+    w.morph = d.m[w.morph]; w.rare = !!w.rare; w.renderings = { BSB: w.BSB || null, ULT: w.ULT || null, UST: w.UST || null }; delete w.BSB; delete w.ULT; delete w.UST; return w; }) }));
+  return { range, name, words: d.words, verses, rare: d.rare, repeated: d.repeated, textual_notes: d.textual_notes, editions: d.editions };
+}
+// UNPACK-END
+let ABOOKS = [], arun = 0;
+function chapOptions() { const b = ABOOKS.find(x => x.c === $('abook').value); $('achap').innerHTML = '<option value="">Chapter</option>' + Array.from({ length: b.ch }, (_, i) => `<option>${i + 1}</option>`).join(''); }
+async function openChapter(code, ch) {
+  const b = ABOOKS.find(x => x.c === code); if (!b || !(ch >= 1 && ch <= b.ch)) return false;
+  const spec = `${code}.${ch}`, mine = ++arun, st = $('astatus');
+  let i = DATA.findIndex(g => g.range === spec);
+  if (i < 0) {
+    st.textContent = `Loading ${b.n} ${ch}…`;
+    try {
+      const r = await fetch(`data/${spec}.json`); if (!r.ok) throw new Error(r.status);
+      const g = unpack(await r.json(), spec, `${b.n} ${ch}`);
+      i = DATA.findIndex(x => x.range === spec);
+      if (i < 0) i = DATA.push(g) - 1;
+    } catch (e) {
+      if (mine !== arun) return true;
+      st.innerHTML = `Could not load ${esc(b.n)} ${ch}. Check your connection and <button type="button" id="aretry">try again</button>.`;
+      $('aretry').onclick = () => openChapter(code, ch);
+      return true;
+    }
+  }
+  if (mine !== arun) return true;
+  st.textContent = ''; cur = i; picker(); render();
+  $('abook').value = code; chapOptions(); $('achap').value = String(ch);
+  history.replaceState(null, '', '#' + spec);
+  return true;
+}
+function fromHash() { const m = location.hash.slice(1).match(/^([1-3]?[A-Za-z]+)\.(\d+)$/); return m ? openChapter(m[1], +m[2]) : false; }
+fetch('data/index.json').then(r => r.ok ? r.json() : Promise.reject()).then(list => {
+  ABOOKS = list; list.forEach(b => { BOOKS[b.c] = b.n; });
+  $('abook').innerHTML = list.map(b => `<option value="${b.c}">${esc(b.n)}</option>`).join(''); chapOptions();
+  $('abook').onchange = chapOptions;
+  $('achap').onchange = () => { if ($('achap').value) openChapter($('abook').value, +$('achap').value); };
+  $('anyrow').hidden = false; render(); fromHash(); addEventListener('hashchange', fromHash);
+}).catch(() => {});
 </script>
 <p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
