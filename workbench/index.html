@@ -59,6 +59,7 @@ table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14p
 th { text-align: left; font: 500 11px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2);
   padding: 6px 8px; border-bottom: 1px solid var(--rule); }
 td { padding: 6px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr.vrow a, .vnote a { color: var(--accent, inherit); }
 tr.vrow td { font: 600 12px var(--mono); color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
 td.g { font: 18px var(--greek); white-space: nowrap; }
 td.g small { display: block; font: italic 12.5px var(--greek); color: var(--ink-2); }
@@ -142,6 +143,8 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const BOOKS = { Mat:'Matthew',Jhn:'John',Rom:'Romans',Php:'Philippians' };
 const nice = r => { const [b, cv] = r.split(' '); return (BOOKS[b] || b) + ' ' + cv; };
+const hash = r => { const [b, cv] = r.split(' '); return b + '.' + cv.replace(':', '.'); };
+const rlink = r => `<a href="../reader/#${hash(r)}">${esc(nice(r))}</a>`;
 let cur = 0;
 try { const s = +localStorage.getItem('pw-psg'); if (DATA[s]) cur = s; } catch (e) {}
 function parse(m) {
@@ -151,10 +154,10 @@ function render() {
   const g = DATA[cur];
   $('rare').innerHTML = g.rare.length ? g.rare.map(x => `<li><span><span class="gk">${esc(x.lemma)}</span> ${esc(x.gloss)}</span><span class="num">${x.nt_count}× NT</span></li>`).join('') : '<li class="empty">None in this passage.</li>';
   $('rep').innerHTML = g.repeated.length ? g.repeated.map(x => `<li><span><span class="gk">${esc(x.lemma)}</span> ${esc(x.gloss)}</span><span class="num">${x.passage_count}× here</span></li>`).join('') : '<li class="empty">No content word appears 3 times.</li>';
-  $('var').innerHTML = g.textual_notes.length ? g.textual_notes.map(n => `<li class="vnote"><span class="num">${esc(nice(n.ref))}</span>${esc(n.text)}</li>`).join('') : '<li class="empty">All eight editions agree here.</li>';
+  $('var').innerHTML = g.textual_notes.length ? g.textual_notes.map(n => `<li class="vnote"><span class="num">${rlink(n.ref)}</span>${esc(n.text)}</li>`).join('') : '<li class="empty">All eight editions agree here.</li>';
   const rows = [];
   g.verses.forEach(v => {
-    rows.push(`<tr class="vrow"><td colspan="6">${esc(nice(v.ref))}</td></tr>`);
+    rows.push(`<tr class="vrow"><td colspan="6">${rlink(v.ref)} · <a href="../compare/#${hash(v.ref)}">compare translations</a></td></tr>`);
     v.words.forEach(w => {
       const tags = (w.rare ? '<span class="tag" style="--k:var(--rare)">rare</span>' : '') +
         (w.passage_count >= 3 && ['noun', 'verb', 'adjective'].includes(w.morph.pos) ? `<span class="tag" style="--k:var(--rep)">${w.passage_count}× here</span>` : '') +
