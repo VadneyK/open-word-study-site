@@ -41,6 +41,10 @@ a.tool:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 a.tool b { font: 700 18px var(--greek); color: var(--accent); }
 a.tool span { color: var(--ink-2); font-size: 15px; }
 @media (max-width: 560px) { a.tool { grid-template-columns: minmax(0, 1fr); } }
+.how { margin: 8px 0 0; padding-left: 1.3em; max-width: 62ch; display: grid; gap: 6px; }
+.how a { color: var(--accent); }
+h2 { font-size: 20px; margin: 28px 0 0; }
+h2 + ul { margin-top: 12px; }
 .try { margin: 10px 0 0; max-width: 62ch; color: var(--ink-2); }
 .try a, .about a, .note a { color: var(--accent); }
 .verse { margin-top: 32px !important; }
@@ -86,6 +90,13 @@ h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important;
   <h1>Open Word Study</h1>
   <p class="lede"><strong>Free tools for studying the words of the Bible in Greek and Hebrew.</strong> No account and no cost, built only from open data.</p>
   <p class="try">Try one: <a href="./reader/#Jhn.1.14">read John 1:14 with the Greek under each word</a>, see <a href="./wheel/#G4637/NT">σκηνόω, "to dwell", in its 5 New Testament places</a>, or <a href="./wheel/#G1343/Mat">δικαιοσύνη, "righteousness", in Matthew</a>.</p>
+  <h2>Three ways to start</h2>
+  <ol class="how">
+    <li><b>From a verse.</b> Open the <a href="./reader/#Jhn.3.16">Reader at John 3:16</a> and tap any word. From there you can see its cross references, compare translations, or color the grammar of the chapter.</li>
+    <li><b>From a word.</b> In <a href="./word-study/">Word Study</a>, type an English word like "love" or a spelling like "agape", and see everywhere it appears and how it is translated. For Old Testament words such as "hesed", use <a href="./hebrew/">Hebrew Word Study</a>.</li>
+    <li><b>From a person or place.</b> In the <a href="./factbook/">Factbook</a>, find Peter or Jerusalem and open any verse that names them.</li>
+  </ol>
+  <h2>All the tools</h2>
   <ul>
     <li><a class="tool" href="./reader/"><b>Interlinear Reader</b><span>Read the English with the Greek or Hebrew word under each word. Start here if you do not read the original languages.</span></a></li>
     <li><a class="tool" href="./compare/"><b>Compare Translations</b><span>Three open English translations of a New Testament verse, with differences traced back to the Greek.</span></a></li>

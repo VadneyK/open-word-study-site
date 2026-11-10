@@ -46,6 +46,7 @@ h2 { font: 700 18px var(--greek); margin: 0 0 8px; }
 .results li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
 .results li[aria-selected="true"], .results li:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 .wstatus { margin: 10px 0 0; font-size: 14px; color: var(--ink-2); }
+.wstatus a { color: var(--bar); }
 .wstatus button { font: inherit; color: var(--bar); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 .nores { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
@@ -141,6 +142,7 @@ addEventListener('error', function (e) {
   </div>
   <div class="chips" id="chips" aria-label="Examples"></div>
   <p class="wstatus" id="wstatus" role="status"></p>
+  <p class="wstatus" id="wlink" hidden></p>
 
   <div class="head" id="head"></div>
   <div class="grid">
@@ -249,6 +251,9 @@ async function show(k) {
   if (mine !== showRun) return;
   st.textContent = '';
   cur = k; sel = null;
+  const wheel = { G4637: 'NT', G1343: 'NT', G1342: 'NT', H2617A: 'OT' }[k];
+  $('wlink').hidden = !wheel;
+  if (wheel) $('wlink').innerHTML = `<a href="../wheel/#${k}/${wheel}">See every occurrence of this word side by side in the Word Wheel</a>`;
   try { localStorage.setItem(STORE, k); } catch (e) {}
   const [lem, gloss, occ, by, forms, rings, same] = L[k];
   $('head').innerHTML = `<span class="big">${esc(lem)}</span><span class="gl">${esc(gloss)}</span><span class="num">${k} · ${occ.length}× in ${HE ? 'the Old Testament' : 'the NT'}</span>`;
