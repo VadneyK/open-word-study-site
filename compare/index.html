@@ -120,9 +120,10 @@ addEventListener('error', function (e) {
   <p class="status" id="status" role="status"></p>
   <p class="sum" id="sum"></p>
   <div id="text"></div>
-  <p class="note">A free study aid from open data and a work in progress. New Testament only for now, because that is where these translations are aligned to the Greek here. BSB: Berean Standard Bible (public domain). ULT and UST: unfoldingWord Literal and Simplified Texts (CC BY-SA 4.0); their curly braces mark words the translators supplied. Greek: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). Underlined words are ones not found, in order, in the translation you compare against. The percentage is a rough measure of wording, not of meaning: a simplified translation will score high on purpose, and a high score does not mean a translation is wrong. Not affiliated with any Bible software company.</p>
+  <p class="note">A free study aid from open data and a work in progress. New Testament only for now, because that is where these translations are aligned to the Greek here. BSB: Berean Standard Bible (public domain). ULT and UST: unfoldingWord Literal and Simplified Texts (CC BY-SA 4.0); their curly braces mark words the translators supplied. Greek: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). Differences are found with the open-source jsdiff library (BSD 3-Clause). For more translations side by side, STEPBible's compare view at stepbible.org covers many more versions. Underlined words are ones not found, in order, in the translation you compare against. The percentage is a rough measure of wording, not of meaning: a simplified translation will score high on purpose, and a high score does not mean a translation is wrong. Not affiliated with any Bible software company.</p>
 </div>
 
+<script src="diff.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -133,12 +134,14 @@ const book = c => BOOKS.find(x => x.c === c);
 // DIFF-START
 const norm = w => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
 const tokens = s => (s.match(/\S+/g) || []).map(t => ({ t, n: norm(t) })).filter(x => x.n);
-// Longest common subsequence of words: which words of b also appear, in order, in a.
+// Which words of b also appear, in order, in a: jsdiff's array diff (BSD 3-Clause, vendored as diff.min.js).
 function common(a, b) {
-  const m = a.length, n = b.length, L = Array.from({ length: m + 1 }, () => new Uint16Array(n + 1));
-  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) L[i][j] = a[i].n === b[j].n ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
-  const kept = new Set(); let i = 0, j = 0;
-  while (i < m && j < n) { if (a[i].n === b[j].n) { kept.add(j); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+  const kept = new Set(); let j = 0;
+  for (const part of Diff.diffArrays(a.map(x => x.n), b.map(x => x.n))) {
+    if (part.removed) continue;
+    if (!part.added) for (let k = 0; k < part.count; k++) kept.add(j + k);
+    j += part.count;
+  }
   return kept;
 }
 function difference(baseText, otherText) {
