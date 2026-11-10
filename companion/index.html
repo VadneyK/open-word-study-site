@@ -164,8 +164,8 @@ function render() {
   });
   const v = g.verses[sel];
   const xr = v.xrefs.length ? `<ul class="xr">${v.xrefs.map(x => `<li style="--k:var(--${x.testament === 'OT' ? 'ot' : 'nt'})"><div class="r">${rlink(x.ref)} <span class="num">${x.votes} votes</span></div><div class="t">${esc(x.text)}</div></li>`).join('')}</ul>` : '<p class="empty">No cross references with reader votes for this verse.</p>';
-  const nts = v.notes.length ? `<ul class="notes">${v.notes.map(n => `<li>${n.quote ? `<span class="q">${esc(n.quote)}</span>` : ''}${n.topic ? `<span class="topic">${esc(n.topic)}</span>` : ''}<div>${esc(n.note)}</div></li>`).join('')}</ul>` : '<p class="empty">No translation notes for this verse.</p>';
-  const nm = v.named.length ? `<div class="names">${v.named.map(e => `<span>${esc(e.name)} <small>${esc(e.kind)}</small></span>`).join('')}</div>` : '<p class="empty">No people or places named in this verse.</p>';
+  const nts = v.notes.length ? `<ul class="notes">${v.notes.map(n => `<li>${n.quote ? `<span class="q">${esc(n.quote)}</span>` : ''}${n.topic ? `<span class="topic">${esc(n.topic)}</span>` : ''}<div>${esc(n.note)}</div></li>`).join('')}</ul>` : `<p class="empty">${DATA[cur].ot ? 'Translation notes here cover the New Testament only.' : 'No translation notes for this verse.'}</p>`;
+  const nm = v.named.length ? `<div class="names">${v.named.map(e => `<span>${esc(e.name)} <small>${esc(e.kind)}</small></span>`).join('')}</div>` : `<p class="empty">${DATA[cur].ot ? 'People and places are tagged for the New Testament only.' : 'No people or places named in this verse.'}</p>`;
   const here = at(v.ref);
   $('margin').innerHTML = `<div class="label">${esc(v.ref)}${here ? ` · <a href="../reader/#${here[1]}">word by word</a>${NTB.includes(here[0]) ? ` · <a href="../compare/#${here[1]}">compare translations</a>` : ''}` : ''}</div>
     <section class="box" style="--k:var(--nt)"><h2>Read alongside</h2>${xr}</section>
