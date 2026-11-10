@@ -24,7 +24,7 @@
 body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--body); }
 .wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 48px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
 h1 { font: 700 28px/1.1 var(--greek); margin: 0; letter-spacing: .01em; text-wrap: balance; }
 .eyebrow:empty { display: none; }
 .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); margin-bottom: 6px; }
@@ -130,15 +130,15 @@ addEventListener('error', function (e) {
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
-<div class="wrap">
-  <header>
+<div class="wrap" role="main">
+  <div class="head">
     <div>
       <div class="eyebrow"></div>
       <h1>Word Wheel</h1>
       <p class="lede">How a Greek or Hebrew word is carried into English. Each ring is one open translation; each slice groups the places it uses the same English word. Pick a slice to see where.</p>
       <p class="lede">These four words are worked examples with every occurrence listed. For any other word, <a href="../word-study/">Greek Word Study</a> and <a href="../hebrew/">Hebrew Word Study</a> draw the same rings.</p>
     </div>
-  </header>
+  </div>
 
   <div class="controls">
     <span class="label" id="l-word">Word</span>
@@ -328,7 +328,7 @@ $('note').innerHTML = 'A free study aid built only from open data, and a work in
 addEventListener('hashchange', () => { if (readHash()) render(); });
 render();
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>

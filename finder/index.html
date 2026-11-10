@@ -124,7 +124,7 @@ addEventListener('error', function (e) {
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
-<div class="wrap">
+<div class="wrap" role="main">
   <h1>Verse Finder</h1>
   <p class="lede">Ask the New Testament a question with more than one part. Each condition matches a Greek word: a word, a person or place, a grammatical form, or a mix. A verse shows up when it meets every condition.</p>
   <div class="presets" id="presets" aria-label="Examples"></div>
@@ -275,7 +275,7 @@ $('more').onclick = () => { shown += 100; renderVerses(); };
 load(PRESETS[0][1]);
 if (LOADED < D.books.length) loadBooks();
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>

@@ -123,7 +123,7 @@ addEventListener('error', function (e) {
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
-<div class="wrap">
+<div class="wrap" role="main">
   <h1>Grammar Lens</h1>
   <p class="lede">Turn on a lens to color every word that fits it. Commands, aorist verbs, a single word: see the shape of a passage at a glance. Tap any word for its parse. Works for Greek and, on any Old Testament chapter, Hebrew.</p>
 
@@ -294,7 +294,7 @@ fetch('data/index.json').then(r => r.ok ? r.json() : Promise.reject()).then(list
 $('gl').onchange = e => $('text').classList.toggle('plain', !e.target.checked);
 setLanguage(); renderPicker(); renderLenses(); renderText();
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>

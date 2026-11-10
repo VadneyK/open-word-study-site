@@ -112,7 +112,7 @@ addEventListener('error', function (e) {
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
-<div class="wrap">
+<div class="wrap" role="main">
   <h1>Interlinear Reader</h1>
   <p class="lede">Read the Bible in English with the Greek or Hebrew word under each English word. No Greek or Hebrew needed: tap a word to see what stands behind it.</p>
   <div class="bar">
@@ -247,7 +247,7 @@ addEventListener('hashchange', () => { const r = parseRef(location.hash.slice(1)
   load(start, location.hash.length > 1 ? `That reference was not found, so this is ${refOk(saved) ? 'the last place you were reading' : 'John 1'}.` : '');
 })();
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>

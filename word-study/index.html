@@ -131,7 +131,7 @@ addEventListener('error', function (e) {
 <nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
-<div class="wrap">
+<div class="wrap" role="main">
   <h1>Greek Word Study</h1>
   <p class="lede">Every word of the Greek New Testament: where it appears, the forms it takes, how open English translations carry it, and other Greek words they translate the same way.</p>
   <div class="search">
@@ -360,7 +360,7 @@ $('chips').querySelectorAll('button').forEach(b => b.onclick = () => show(b.data
 addEventListener('hashchange', () => { const k = location.hash.slice(1); if (IDX[k] && k !== cur) show(k); });
 show(cur);
 </script>
-<p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p>
+<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 <script>if(!window.owsFailed){var l=document.getElementById('ows-load');if(l)l.hidden=true}</script>
 
 </html>
