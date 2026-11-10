@@ -150,7 +150,7 @@ addEventListener('error', function (e) {
     <aside class="card" id="card" aria-live="polite"><div class="label">Selected word</div><p>Tap a word to see its lemma, gloss and parse.</p></aside>
   </div>
 
-  <p class="note">A free study aid from open data. Greek text, lemmas and morphology: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). English under each word: Berean Standard Bible (public domain), shown where it aligns one to one. Hebrew and Aramaic text and parsing: STEPBible TAHOT (CC BY 4.0), with ETCBC morphology read by the OpenScriptures Hebrew morphology code table; a few STEPBible codes that table does not define are shown as "other" with the raw code, not guessed. Not affiliated with any Bible software company.</p>
+  <p class="note">A free study aid from open data. Greek text, lemmas and morphology: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). English under each word: Berean Standard Bible (public domain), shown where it aligns one to one. Hebrew and Aramaic text and parsing: STEPBible TAHOT (CC BY 4.0), with ETCBC morphology read by the OpenScriptures Hebrew morphology code table and STEPBible's own additions to it; any code neither list defines is shown as "other" with the raw code, not guessed. Not affiliated with any Bible software company.</p>
 </div>
 
 <script>
@@ -164,7 +164,7 @@ const GK_OPTS = {
 const HE_OPTS = {
   pos: ['verb', 'noun', 'adjective', 'pronoun', 'preposition', 'conjunction', 'adverb', 'particle'],
   stem: ['qal', 'niphal', 'piel', 'pual', 'hiphil', 'hophal', 'hithpael'],
-  form: ['perfect', 'sequential perfect', 'imperfect', 'sequential imperfect', 'cohortative', 'jussive', 'imperative', 'participle active', 'participle passive', 'infinitive absolute', 'infinitive construct'],
+  form: ['perfect', 'sequential perfect', 'imperfect', 'sequential imperfect', 'imperfect after and', 'cohortative', 'jussive', 'imperative', 'participle active', 'participle passive', 'infinitive absolute', 'infinitive construct'],
   state: ['absolute', 'construct', 'determined'] };
 const LABEL = { pos: 'part of speech' };
 const COLORS = ['var(--l1)', 'var(--l2)', 'var(--l3)', 'var(--l4)', 'var(--l5)', 'var(--l6)'];
