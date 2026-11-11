@@ -141,7 +141,7 @@ textarea.jp{font-size:1rem}
       <li>A script lines up each verse of jpnm with the Robinson-Pierpont Greek, the World English Bible (WEB) and 口語訳 (1955).</li>
       <li>An AI model reads each verse and drafts a suggestion, with a reason that cites Strong's numbers.</li>
       <li>A script checks each claim against STEPBible's tagged Greek (TAGNT): are the cited words in the Byzantine verse, and do the two Greek texts differ there?</li>
-      <li>A native Japanese reader goes through each row and keeps, changes or drops it. Only rows that have been through that review are shown, with the reviewer's note at the bottom of each card.</li>
+      <li>Japanese is my native language, so I go through each row myself and keep, change or drop it. Only rows I've reviewed are shown, with my note at the bottom of each card.</li>
     </ol>
     <p class="warnbox">The first drafts were written by AI. Treat each row as a suggestion for the editor, not a final reading. Greek data: <a href="https://github.com/STEPBible/STEPBible-Data">STEPBible TAGNT</a> (CC BY 4.0).</p>
   </header>
@@ -155,7 +155,7 @@ textarea.jp{font-size:1rem}
     <div class="bar" hidden>
       <label for="f-ch">Chapter <select id="f-ch"></select></label>
       <label for="f-conf">Confidence
-        <select id="f-conf"><option value="">All</option><option value="high">High</option><option value="medium">Medium</option><option value="check-with-a-native-reader">Native reader</option></select></label>
+        <select id="f-conf"><option value="">All</option><option value="high">High</option><option value="medium">Medium</option><option value="check-with-a-native-reader">Needs my check</option></select></label>
       <label for="f-st">Status
         <select id="f-st"><option value="">All</option><option value="open">Not decided</option><option value="keep">Keep</option><option value="fix">Fix</option><option value="drop">Drop</option></select></label>
       <span class="progress" id="progress"></span>
@@ -278,7 +278,7 @@ function decode(code){
 function el(tag,attrs,kids){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==="text")e.textContent=attrs[k];else if(k==="cls")e.className=attrs[k];else e.setAttribute(k,attrs[k])}(kids||[]).forEach(function(c){if(c==null)return;e.appendChild(typeof c==="string"?document.createTextNode(c):c)});return e}
 function catLabel(c){return {omission:"missing word",addition:"added word",mistranslation:"wrong sense",typo:"typo",
   "name-number":"name or number","key-term":"key term"}[c]||c}
-function confLabel(c){return c==="check-with-a-native-reader"?"native reader":c}
+function confLabel(c){return c==="check-with-a-native-reader"?"needs my check":c}
 function confCls(c){return c==="check-with-a-native-reader"?"native":c}
 function markIn(text,part,cls){var i=text.indexOf(part);if(i<0)return [text];return [text.slice(0,i),el("mark",{cls:cls,text:part}),text.slice(i+part.length)]}
 function status(id){return (DEC[id]&&DEC[id].status)||"open"}
@@ -431,7 +431,7 @@ function card(r){
   if(r.notes&&r.notes.length) c.appendChild(el("details",null,[el("summary",{text:"Footnotes in the Freedom Bible for this verse"})].concat(r.notes.map(function(n){return el("p",{cls:"jp",text:n})}))));
   c.appendChild(el("div",{cls:"wrap",style:"gap:10px"},[el("h3",{text:"How this was reached"}),steps(r)]));
   c.appendChild(interlinear(r));
-  if(r.review_note) c.appendChild(el("div",{cls:"rnote"},[el("h3",{text:"Reviewer's note (native Japanese reader)"}),el("p",{text:r.review_note})]));
+  if(r.review_note) c.appendChild(el("div",{cls:"rnote"},[el("h3",{text:"My note"}),el("p",{text:r.review_note})]));
   return c;
 }
 var F={ch:"1",conf:"",st:""};
