@@ -319,7 +319,7 @@ function steps(r){
   if(!c.critical_claim){v="This row does not depend on a difference between Greek texts. It is about meaning, grammar or a typo, so check it with the word details in step 3.";cls="muted"}
   else if(c.cited_word_differs){v="Edition data agrees: STEPBible marks a cited word as different between the Byzantine and the critical text in this verse.";cls="verdict ok"}
   else if(c.edition_diff){v="Edition data shows a difference in this verse, but not at the cited word. Check whether the reason points at the right word.";cls="verdict warn"}
-  else{v="Edition data shows no word difference here. Word order and some spellings are not tracked, so this claim rests on the AI alone. Treat it as unconfirmed.";cls="verdict bad"}
+  else{v="Edition data shows no word difference here. Word order and some spellings are not tracked, so no edition data backs this claim. Treat it as unconfirmed.";cls="verdict bad"}
   var bz=r.words.filter(function(w){return r.byz_only.indexOf(w.wn)>=0&&w.byz&&!w.na}).map(function(w){return w.g.replace(/[.,;·¶]/g,"")+" ‘"+enOf(w)+"’ (G"+w.s+")"});
   var na=r.words.filter(function(w){return r.na_only.indexOf(w.wn)>=0&&w.na&&!w.byz}).map(function(w){return w.g.replace(/[.,;·¶]/g,"")+" ‘"+enOf(w)+"’ (G"+w.s+")"});
   var vars=r.words.filter(function(w){return w.var&&/Byz/.test(w.var)}).map(function(w){return w.g+" ⇄ "+w.var});
@@ -337,7 +337,7 @@ function steps(r){
     el("p",{cls:"muted",text:"If the WEB reads like the current Japanese, send the row as a question instead of a correction."})])]));
   // 5. your call
   ol.appendChild(el("li",null,[el("div",null,[el("h3",{text:"Make the Japanese call"}),
-    el("p",{text:"Read the better reading out loud. Is it natural, and does it change only what the reason covers? This step is yours; the AI's Japanese is the weakest part."})])]));
+    el("p",{text:"Read the better reading out loud. Is it natural, and does it change only what the reason covers? This step needs a native speaker; the first draft's Japanese is the weakest part."})])]));
   return ol;
 }
 
