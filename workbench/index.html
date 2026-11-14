@@ -315,12 +315,13 @@ fetch('data/index.json').then(r => r.ok ? r.json() : Promise.reject()).then(list
   });
   if (!ja) return;
   function ready() { root.classList.add('owsja-ready'); }
-  fetch(home + 'i18n/ja.json').then(function (r) { return r.json(); }).then(start).catch(ready);
+  fetch(home + 'i18n/ja.json').then(function (r) { return r.json(); }).then(start).catch(function (e) { window.owsLangError = String(e && e.stack || e); ready(); });
   function start(D) {
     var norm = function (s) { return s.replace(/\s+/g, ' ').trim(); };
     var pats = D.patterns.map(function (p) { return [new RegExp(p[0]), p[1]]; });
     var esc = function (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
     var refRe = new RegExp('^(' + Object.keys(D.books).sort(function (a, b) { return b.length - a.length; }).map(esc).join('|') + ') (\\d+)(?::(\\d+(?:[-,]\\d+)*))?$');
+    var abbrRe = new RegExp('^(' + Object.keys(D.bookAbbr).join('|') + ') (\\d+):(\\d+)$');
     function gram(s) {
       var parts = s.split(/(\s+|[·|,\/-]+)/), hit = false, out = [];
       for (var i = 0; i < parts.length; i++) {
@@ -336,6 +337,8 @@ fetch('data/index.json').then(r => r.ok ? r.json() : Promise.reject()).then(list
       if (D.text[s] !== undefined) return D.text[s];
       var m = refRe.exec(s);
       if (m) return D.books[m[1]] + ' ' + m[2] + (m[3] ? ':' + m[3] : '章');
+      m = abbrRe.exec(s);
+      if (m) return D.bookAbbr[m[1]] + ' ' + m[2] + ':' + m[3];
       for (var i = 0; i < pats.length; i++) {
         m = pats[i][0].exec(s);
         if (m) return pats[i][1].replace(/\{g:\$(\d)\}/g, function (_, n) { return gram(m[n]) || m[n]; })

@@ -155,9 +155,241 @@
   "(CC BY 4.0, Tyndale House Cambridge);": "（CC BY 4.0、Tyndale House Cambridge）；",
   "(Public domain);": "（パブリックドメイン）；",
   "(CC BY-SA 4.0, unfoldingWord);": "（CC BY-SA 4.0、unfoldingWord）；",
-  "(CC BY 4.0, Tyndale House Cambridge). Slices group renderings by their main English word, so “he will dwell” and “dwelling” sit together. Words a translation does not align one to one are shown as a dashed gap, not hidden. It does not use any copyrighted translation and is not affiliated with any Bible software company.": "（CC BY 4.0、Tyndale House Cambridge）。輪の一部分は、訳語を中心になる英単語ごとにまとめたものです。たとえば he will dwell と dwelling は同じ部分に入ります。翻訳が1対1で対応づけていない語は、隠さずに破線のすき間として表示しています。著作権のある翻訳は使っていません。どの聖書ソフト会社とも関係ありません。"
+  "(CC BY 4.0, Tyndale House Cambridge). Slices group renderings by their main English word, so “he will dwell” and “dwelling” sit together. Words a translation does not align one to one are shown as a dashed gap, not hidden. It does not use any copyrighted translation and is not affiliated with any Bible software company.": "（CC BY 4.0、Tyndale House Cambridge）。輪の一部分は、訳語を中心になる英単語ごとにまとめたものです。たとえば he will dwell と dwelling は同じ部分に入ります。翻訳が1対1で対応づけていない語は、隠さずに破線のすき間として表示しています。著作権のある翻訳は使っていません。どの聖書ソフト会社とも関係ありません。",
+  "See how three open English translations of the New Testament say the same verse, and trace any difference back to the Greek word behind it.": "新約聖書の同じ節を、公開されている3つの英語訳がどう言っているかを見て、違いをその背後のギリシャ語までたどります。",
+  "Compare against": "比べる基準",
+  "Most different verses first": "違いの大きい節から表示",
+  "Greek list: only words translated differently": "ギリシャ語の一覧：訳が違う語だけ",
+  "translated differently": "訳が違う",
+  "Not in this translation's text.": "この翻訳の本文にはありません。",
+  "That reference was not found, so this is Matthew 5.": "その箇所は見つからなかったので、マタイ 5章を表示しています。",
+  "A free study aid from open data and a work in progress. New Testament only for now, because that is where these translations are aligned to the Greek here. BSB: Berean Standard Bible (public domain). ULT and UST: unfoldingWord Literal and Simplified Texts (CC BY-SA 4.0); their curly braces mark words the translators supplied. Greek: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). Differences are found with the open-source jsdiff library (BSD 3-Clause). For more translations side by side, STEPBible's compare view at stepbible.org covers many more versions. Underlined words are ones not found, in order, in the translation you compare against. The percentage is a rough measure of wording, not of meaning: a simplified translation will score high on purpose, and a high score does not mean a translation is wrong. Not affiliated with any Bible software company.": "公開データで作った無料の学習用ツールで、まだ作りかけです。いまは新約聖書だけです。ここでは、これらの翻訳がギリシャ語に対応づけられているのが新約聖書だからです。BSB：Berean Standard Bible（パブリックドメイン）。ULT と UST：unfoldingWord Literal Text と Simplified Text（CC BY-SA 4.0）。波かっこは翻訳者が補った語です。ギリシャ語：STEPBible TAGNT（CC BY 4.0、Tyndale House Cambridge）。違いはオープンソースの jsdiff ライブラリ（BSD 3-Clause）で見つけています。もっと多くの翻訳を並べたいときは、stepbible.org の比較表示が多くの訳に対応しています。下線の語は、比べる基準の翻訳に同じ順番では出てこない語です。パーセントは言い回しのおおまかな目安で、意味の違いを測るものではありません。平易な訳はわざと高い数字になりますし、数字が高いからといって翻訳が間違っているわけではありません。どの聖書ソフト会社とも関係ありません。",
+  "Start a passage with what is worth slowing down for: rare words, words the author repeats, and places where Greek editions read differently. Then every word, in order, with its parse and three open translations.": "まず、ゆっくり読む価値のあるところから始めます。まれな語、著者が繰り返す語、ギリシャ語本文の版によって読みが違う箇所です。そのあと、すべての語を順番に、解析と3つの公開訳と一緒に見ます。",
+  "Passage": "聖書箇所",
+  "Or any chapter": "または好きな章",
+  "The Lord’s Prayer, Matthew 6:9 to 13": "主の祈り（マタイ 6:9〜13）",
+  "Rare words": "まれな語",
+  "10 or fewer times in the NT": "新約聖書で10回以下",
+  "Repeated here": "ここで繰り返される語",
+  "nouns, verbs, adjectives, 3 or more times": "名詞、動詞、形容詞で3回以上",
+  "Editions differ": "版による違い",
+  "from STEPBible's edition data": "STEPBible の版データより",
+  "Every word": "すべての語",
+  "Lemma": "見出し語",
+  "rare": "まれ",
+  "editions": "版の違い",
+  "None in this passage.": "この箇所にはありません。",
+  "No content word appears 3 times.": "3回以上出てくる内容語はありません。",
+  "All eight editions agree here.": "ここでは8つの版がすべて一致しています。",
+  "Every word, scrollable": "すべての語（スクロールできます）",
+  "A free study aid from open data and a work in progress. Greek text, lemmas, morphology and edition data: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). English: Berean Standard Bible (public domain), unfoldingWord Literal and Simplified Texts (CC BY-SA 4.0). Counts are NA28 words as tagged by STEPBible. Edition abbreviations: NA28 and NA27 Nestle-Aland, Tyn Tyndale House GNT, SBL SBL GNT, WH Westcott and Hort, Treg Tregelles, TR Textus Receptus, Byz Byzantine. It does not include commentary, and it is not affiliated with any Bible software company.": "公開データで作った無料の学習用ツールで、まだ作りかけです。ギリシャ語の本文、見出し語、形態情報、版のデータ：STEPBible TAGNT（CC BY 4.0、Tyndale House Cambridge）。英語：Berean Standard Bible（パブリックドメイン）、unfoldingWord Literal Text と Simplified Text（CC BY-SA 4.0）。回数は、STEPBible がタグを付けた NA28 の語で数えています。版の略号：NA28 と NA27 は Nestle-Aland、Tyn は Tyndale House GNT、SBL は SBL GNT、WH は Westcott and Hort、Treg は Tregelles、TR は Textus Receptus、Byz はビザンチン型本文。注解は含みません。どの聖書ソフト会社とも関係ありません。",
+  "Read a passage with the margin open. Tap a verse to see where else Scripture speaks to it, notes on phrases that are hard to translate, and the people and places it names.": "欄外の助けと一緒に聖書箇所を読みます。節をタップすると、聖書のほかの箇所でそれに触れているところ、訳しにくい言い回しについてのノート、そこに出てくる人物と場所が見られます。",
+  "Old Testament echo": "旧約聖書の響き",
+  "translation note": "翻訳ノート",
+  "Psalm": "詩篇",
+  "word by word": "1語ずつ見る",
+  "Read alongside": "あわせて読む",
+  "Notes on hard phrases": "難しい言い回しのノート",
+  "Named here": "ここに出てくる名前",
+  "Passage text": "聖書本文",
+  "Margin for the selected verse": "選んだ節の欄外",
+  "No cross references with reader votes for this verse.": "この節には、読者の投票がある相互参照がありません。",
+  "Translation notes here cover the New Testament only.": "翻訳ノートは新約聖書だけです。",
+  "No translation notes for this verse.": "この節には翻訳ノートがありません。",
+  "People and places are tagged for the New Testament only.": "人物と場所のタグは新約聖書だけです。",
+  "No people or places named in this verse.": "この節に名前が出てくる人物や場所はありません。",
+  "A free study aid from open material only, and a work in progress. Text: Berean Standard Bible (public domain). Cross references: OpenBible.info (CC BY 4.0), ranked by readers' votes, so they are suggestions to weigh, not a commentary. Notes: unfoldingWord Translation Notes (CC BY-SA 4.0), written to help translators, lightly cleaned of formatting. People and places: STEPBible TIPNR (CC BY 4.0). It does not include commentary, and it is not affiliated with any Bible software company.": "公開されている資料だけで作った無料の学習用ツールで、まだ作りかけです。本文：Berean Standard Bible（パブリックドメイン）。相互参照：OpenBible.info（CC BY 4.0）。読者の投票順なので、注解ではなく、考える材料としての提案です。ノート：unfoldingWord Translation Notes（CC BY-SA 4.0）。翻訳者を助けるために書かれたもので、書式を軽く整理しています（ノートは英語です）。人物と場所：STEPBible TIPNR（CC BY 4.0）。注解は含みません。どの聖書ソフト会社とも関係ありません。",
+  "Turn on a lens to color every word that fits it. Commands, aorist verbs, a single word: see the shape of a passage at a glance. Tap any word for its parse. Works for Greek and, on any Old Testament chapter, Hebrew.": "レンズをオンにすると、当てはまる語すべてに色が付きます。命令形、アオリストの動詞、1つの語など、聖書箇所の形がひと目で分かります。単語をタップすると解析が見られます。ギリシャ語と、旧約聖書の章ではヘブライ語に対応しています。",
+  "English under each word": "単語の下に英語を表示",
+  "Commands": "命令形",
+  "Aorist indicative": "アオリスト直説法",
+  "Participles": "分詞",
+  "Genitives": "属格",
+  "Story verbs (sequential imperfect)": "物語の動詞（継続の未完了）",
+  "Construct nouns (\"of\")": "連語形の名詞（「〜の」）",
+  "+ Lens": "+ レンズ",
+  "New lens": "新しいレンズ",
+  "Add lens": "レンズを追加",
+  "Tap a word to see its lemma, gloss and parse.": "単語をタップすると、見出し語、語釈、解析が見られます。",
+  "Lenses": "レンズ",
+  "part of speech": "品詞",
+  "tense": "時制",
+  "mood": "法",
+  "voice": "態",
+  "case": "格",
+  "pos": "品詞",
+  "Gloss": "語釈",
+  "Part": "品詞",
+  "Code": "コード",
+  "Language": "言語",
+  "Type": "種類",
+  "Stem": "語幹（ビンヤン）",
+  "Tense": "時制",
+  "Voice": "態",
+  "Mood": "法",
+  "Person": "人称",
+  "Case": "格",
+  "Number": "数",
+  "Gender": "性",
+  "State": "状態",
+  "Prefix": "接頭辞",
+  "A free study aid from open data. Greek text, lemmas and morphology: STEPBible TAGNT (CC BY 4.0, Tyndale House Cambridge). English under each word: Berean Standard Bible (public domain), shown where it aligns one to one. Hebrew and Aramaic text and parsing: STEPBible TAHOT (CC BY 4.0), with ETCBC morphology read by the OpenScriptures Hebrew morphology code table and STEPBible's own additions to it; any code neither list defines is shown as \"other\" with the raw code, not guessed. Not affiliated with any Bible software company.": "公開データで作った無料の学習用ツールです。ギリシャ語の本文、見出し語、形態情報：STEPBible TAGNT（CC BY 4.0、Tyndale House Cambridge）。単語の下の英語：Berean Standard Bible（パブリックドメイン）。1対1で対応する語だけ表示します。ヘブライ語とアラム語の本文と解析：STEPBible TAHOT（CC BY 4.0）。ETCBC の形態情報を、OpenScriptures のヘブライ語形態コード表と STEPBible による追加分で読んでいます。どちらにも定義のないコードは、推測せずに other と元のコードで表示します。どの聖書ソフト会社とも関係ありません。",
+  "Ask the New Testament a question with more than one part. Each condition matches a Greek word: a word, a person or place, a grammatical form, or a mix. A verse shows up when it meets every condition.": "新約聖書に、いくつかの条件を組み合わせて質問できます。条件は1つのギリシャ語に当てはまるもので、語、人物や場所、文法の形、またはその組み合わせです。すべての条件を満たす節が表示されます。",
+  "Peter and Jesus together": "ペテロとイエスが一緒に出てくる節",
+  "\"Love\" as a command": "命令形の「愛する」",
+  "Faith and righteousness": "信仰と義",
+  "Jerusalem": "エルサレム",
+  "Future passive verbs in Revelation-style lists": "未来・受動の動詞",
+  "+ Add a condition": "+ 条件を追加",
+  "verses meet the condition": "節が条件を満たしています",
+  "verses meet the condition so far": "節が条件を満たしています（検索中）",
+  "By book": "書ごと",
+  "Matched forms": "一致した語形",
+  "Verses": "節",
+  "Clear person or place": "人物・場所を消す",
+  "Clear word": "語を消す",
+  "word, person or place: ἀγάπη, love, Peter": "語、人物、場所：ἀγάπη、love、Peter",
+  "Search for a word, person or place": "語、人物、場所を探す",
+  "No word, person or place found. Try Greek letters, an English word, or a name.": "語、人物、場所が見つかりません。ギリシャ文字、英単語、または名前を試してください。",
+  "Add a condition or pick an example above.": "条件を追加するか、上の例を選んでください。",
+  "no BSB text": "BSB の本文なし",
+  "A free study aid from open data. Greek words, lemmas and grammar: STEPBible TAGNT (CC BY 4.0), NA28 words. People and places: STEPBible TIPNR (CC BY 4.0), so a pronoun like \"he\" is not counted as the person. English text: Berean Standard Bible (public domain). Not affiliated with any Bible software company.": "公開データで作った無料の学習用ツールです。ギリシャ語の語、見出し語、文法：STEPBible TAGNT（CC BY 4.0）、NA28 の語。人物と場所：STEPBible TIPNR（CC BY 4.0）。そのため he のような代名詞は人物として数えません。英語の本文：Berean Standard Bible（パブリックドメイン）。どの聖書ソフト会社とも関係ありません。",
+  "New Testament Factbook": "新約聖書 人名・地名事典",
+  "The people, places and things the New Testament names, each with a short description, family links, and every verse where the Greek text names them.": "新約聖書に名前が出てくる人物、場所、ものを、短い説明、家族のつながり、ギリシャ語本文で名前が出てくるすべての節と一緒に見られます。",
+  "Find": "探す",
+  "All": "すべて",
+  "People": "人物",
+  "Places": "場所",
+  "Things and groups": "もの・グループ",
+  "No matches. Try a shorter name or \"All\".": "一致するものがありません。短い名前にするか、「すべて」を試してください。",
+  "Greek names": "ギリシャ語の名前",
+  "Parents": "両親",
+  "Siblings": "兄弟姉妹",
+  "Married to": "配偶者",
+  "Children": "子ども",
+  "Every mention": "すべての言及箇所",
+  "Every mention, scrollable": "すべての言及箇所（スクロールできます）",
+  "Directory": "一覧",
+  "Show": "表示",
+  "A free study aid from open data. People, places, descriptions and relations: STEPBible TIPNR (CC BY 4.0, Tyndale House Cambridge). Mentions are words in the NA28 Greek text tagged with that individual in STEPBible TAGNT, so \"he\" and \"him\" are not counted, and a name used for more than one person is counted for the right one where STEPBible has told them apart. The place plot shows relative positions from TIPNR's coordinates; it is not a map. Not affiliated with any Bible software company.": "公開データで作った無料の学習用ツールです。人物、場所、説明、関係：STEPBible TIPNR（CC BY 4.0、Tyndale House Cambridge）。説明は英語です。言及箇所は、NA28 ギリシャ語本文の語のうち、STEPBible TAGNT でその人物や場所のタグが付いたものです。そのため he や him は数えません。同じ名前の人が複数いる場合は、STEPBible が区別しているかぎり、正しい人に数えています。場所の図は TIPNR の座標による相対的な位置で、地図ではありません。どの聖書ソフト会社とも関係ありません。"
  },
  "patterns": [
+  [
+   "^Could not load the list of books\\. Check your connection and$",
+   "書の一覧を読み込めませんでした。接続を確認して、"
+  ],
+  [
+   "^Could not load every book\\. Results cover (\\d+) of (\\d+) books\\. Check your connection and$",
+   "すべての書を読み込めませんでした。結果は$2書のうち$1書の分です。接続を確認して、"
+  ],
+  [
+   "^Loading the New Testament: (\\d+) of (\\d+) books searched so far\\.$",
+   "新約聖書を読み込んでいます：$2書のうち$1書を検索しました。"
+  ],
+  [
+   "^In (.+) (\\d+), compared with the$",
+   "{$1} $2章を、次の翻訳と比べると"
+  ],
+  [
+   "^averages (\\d+)% different wording,$",
+   "は平均で言い回しが $1% 違い、"
+  ],
+  [
+   "^averages (\\d+)% different wording\\.?$",
+   "は平均で言い回しが $1% 違います。"
+  ],
+  [
+   "^(\\d+)% different wording$",
+   "言い回しの違い $1%"
+  ],
+  [
+   "^Through the Greek: (\\d+) of (\\d+) words translated differently$",
+   "ギリシャ語から見る：$2語のうち$1語の訳が違います"
+  ],
+  [
+   "^(.+), open in the Interlinear Reader$",
+   "{$1}（行間対訳リーダーで開く）"
+  ],
+  [
+   "^(.+) (\\d+):(\\d+) to (\\d+)$",
+   "{$1} $2:$3〜$4"
+  ],
+  [
+   "^([GH]\\d+) · (\\d+)× NT$",
+   "$1 · 新約 $2回"
+  ],
+  [
+   "^(\\d+)× NT$",
+   "新約 $1回"
+  ],
+  [
+   "^(\\d+)× here$",
+   "ここで$1回"
+  ],
+  [
+   "^NA28 (.+), but (.+) in ([A-Za-z0-9, ]+)$",
+   "NA28 は $1、$3 は $2"
+  ],
+  [
+   "^([A-Za-z0-9, ]+) adds (.+ \\(.+\\))$",
+   "$1 は $2 を加えています"
+  ],
+  [
+   "^(\\d+) votes?$",
+   "$1票"
+  ],
+  [
+   "^(.+ \\d+:\\d+) ·$",
+   "{$1} ·"
+  ],
+  [
+   "^any (.+)$",
+   "{$1}：すべて"
+  ],
+  [
+   "^Color every (.+)$",
+   "「{g:$1}」すべてに色を付ける"
+  ],
+  [
+   "^Condition (\\d+)$",
+   "条件 $1"
+  ],
+  [
+   "^Remove condition (\\d+)$",
+   "条件 $1 を削除"
+  ],
+  [
+   "^verses meet all (\\d+) conditions$",
+   "節が$1つの条件をすべて満たしています"
+  ],
+  [
+   "^verses meet all (\\d+) conditions so far$",
+   "節が$1つの条件をすべて満たしています（検索中）"
+  ],
+  [
+   "^Show more \\((-?\\d+) left\\)$",
+   "もっと見る（残り $1）"
+  ],
+  [
+   "^word · (\\d+)×$",
+   "語 · $1回"
+  ],
+  [
+   "^(\\d+) shown, most mentioned first$",
+   "$1件を表示（言及の多い順）"
+  ],
+  [
+   "^(\\d+) mentions? in the NT$",
+   "新約聖書に$1回"
+  ],
+  [
+   "^Where the NT names (.+)$",
+   "新約聖書で $1 が出てくる箇所"
+  ],
+  [
+   "^Plot of (.+) among other NT places$",
+   "$1 とほかの新約聖書の場所の位置図"
+  ],
   [
    "^Loading the data for this tool\\. About ([\\d.]+) MB to download the first time\\.$",
    "このツールのデータを読み込んでいます。初回は約 $1 MB をダウンロードします。"
@@ -446,14 +678,25 @@
   "pual": "プアル",
   "hifil": "ヒフィル",
   "hofal": "ホファル",
-  "hitpael": "ヒトパエル"
+  "hitpael": "ヒトパエル",
+  "greek": "ギリシャ語",
+  "hebrew": "ヘブライ語",
+  "aramaic": "アラム語",
+  "sequential": "継続の",
+  "state": "状態",
+  "determined": "限定",
+  "other": "その他"
  },
  "grammarIn": [
   ".parse",
-  "#forms td:nth-child(2)"
+  "#forms td:nth-child(2)",
+  "td.p",
+  "#forms .num",
+  "#card dd",
+  "select option"
  ],
  "abbrIn": [
   "svg text"
  ],
- "oneWordIn": "b, label, .label, th, button, h1, h2, h3, a, summary, legend, .refs, .a2bar *"
+ "oneWordIn": "b, label, .label, th, dt, button, option, h1, h2, h3, a, summary, legend, .refs, .tag, .lens, .kind, .a2bar *"
 }
