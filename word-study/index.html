@@ -3,6 +3,8 @@
 <head>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>try{if(/[?&]text=large\b/.test(location.search)||localStorage.getItem('ows-text')==='large')document.documentElement.classList.add('owsbig')}catch(e){}</script>
+<script>try{var m=/[?&]lang=(ja|en)\b/.exec(location.search),l=m?m[1]:localStorage.getItem('ows-lang');if(m)localStorage.setItem('ows-lang',l);if(l==='ja'){document.documentElement.classList.add('owsja');document.documentElement.lang='ja';setTimeout(function(){document.documentElement.classList.add('owsja-ready')},2500)}}catch(e){}</script>
+<style>html.owsja:not(.owsja-ready) body{visibility:hidden}.owsja-note{max-width:1180px;margin:6px auto 0;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));font:14px/1.6 var(--a2-ui,system-ui,sans-serif);color:var(--ink-2,#473c39)}html.owsja body{font-family:var(--body,system-ui),"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;line-break:strict}</style>
 <meta name="description" content="Any Greek New Testament word: where it appears, its forms, and how open English translations render it.">
 <meta property="og:title" content="Greek Word Study">
 <meta property="og:description" content="Any Greek New Testament word: where it appears, its forms, and how open English translations render it.">
@@ -122,15 +124,17 @@ h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important;
 .owsload a { color: inherit; }
 </style>
 <style>
-.owsbig-btn { margin-left: auto; font: 600 15px var(--a2-ui, system-ui, sans-serif); color: var(--ink, #1c1917); background: var(--sheet, #fff);
+.owsctl { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.owsbig-btn, .owslang-btn { font: 600 15px var(--a2-ui, system-ui, sans-serif); color: var(--ink, #1c1917); background: var(--sheet, #fff);
   border: 2px solid currentColor; border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; }
-.owsbig-btn:hover { background: var(--paper, #f3f1f1); }
-.owsbig-btn:focus-visible { outline: 3px solid var(--focus, #0069a8); outline-offset: 2px; }
+.owsbig-btn:hover, .owslang-btn:hover { background: var(--paper, #f3f1f1); }
+.owsbig-btn:focus-visible, .owslang-btn:focus-visible { outline: 3px solid var(--focus, #0069a8); outline-offset: 2px; }
 .owsbig-btn[aria-pressed="true"] { background: var(--ink, #1c1917); color: var(--sheet, #fff); }
 .a2bar-home { justify-content: flex-end; }
 html.owsbig body { zoom: 1.25; }
 html.owsbig { --ink-2: var(--ink); --muted: var(--fg, var(--ink)); }
-html.owsbig .owsbig-btn { zoom: 0.8; font-size: 19px; min-height: 55px; }
+html.owsbig .owsctl { zoom: 0.8; }
+html.owsbig .owsctl button { font-size: 19px; min-height: 55px; }
 html.owsbig :is(p, li, td, dd, blockquote) { line-height: 1.7; }
 html.owsbig a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
 html.owsbig :is(button, select, input, [role="button"], [role="tab"], [role="option"]) { min-height: 44px; }
@@ -144,7 +148,7 @@ addEventListener('error', function (e) {
   if (s) s.innerHTML = 'Something went wrong starting this tool. <a href="">Reload the page</a>, or try a newer browser.';
 });
 </script>
-<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span><button type="button" class="owsbig-btn" aria-pressed="false">Larger text</button></nav>
+<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span><span class="owsctl"><button type="button" class="owslang-btn" lang="ja">日本語</button><button type="button" class="owsbig-btn" aria-pressed="false">Larger text</button></span></nav>
 <p class="owsload" id="ows-load" role="status">Loading the data for this tool.</p>
 <noscript><p class="owsload">This tool needs JavaScript turned on.</p></noscript>
 <div class="wrap" role="main">
@@ -429,6 +433,112 @@ show(cur);
     show();
   });
   show();
+})();
+</script>
+<script data-home="../">
+(function () {
+  var root = document.documentElement, home = document.currentScript.getAttribute('data-home'), ja = root.classList.contains('owsja');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.owslang-btn');
+    if (!b) return;
+    var to = ja ? 'en' : 'ja', u = new URL(location.href);
+    try { localStorage.setItem('ows-lang', to); } catch (err) {}
+    u.searchParams.set('lang', to);
+    location.href = u.toString();
+  });
+  if (!ja) return;
+  function ready() { root.classList.add('owsja-ready'); }
+  fetch(home + 'i18n/ja.json').then(function (r) { return r.json(); }).then(start).catch(ready);
+  function start(D) {
+    var norm = function (s) { return s.replace(/\s+/g, ' ').trim(); };
+    var pats = D.patterns.map(function (p) { return [new RegExp(p[0]), p[1]]; });
+    var esc = function (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+    var refRe = new RegExp('^(' + Object.keys(D.books).sort(function (a, b) { return b.length - a.length; }).map(esc).join('|') + ') (\\d+)(?::(\\d+(?:[-,]\\d+)*))?$');
+    function gram(s) {
+      var parts = s.split(/(\s+|[·|,\/-]+)/), hit = false, out = [];
+      for (var i = 0; i < parts.length; i++) {
+        var w = parts[i];
+        if (!/[A-Za-z0-9]/.test(w)) { out.push(w); continue; }
+        var g = D.grammar[w.toLowerCase()];
+        if (g === undefined) return null;
+        hit = true; out.push(g);
+      }
+      return hit ? out.join('').replace(/ +/g, ' ').trim() : null;
+    }
+    function tr(s) {
+      if (D.text[s] !== undefined) return D.text[s];
+      var m = refRe.exec(s);
+      if (m) return D.books[m[1]] + ' ' + m[2] + (m[3] ? ':' + m[3] : '章');
+      for (var i = 0; i < pats.length; i++) {
+        m = pats[i][0].exec(s);
+        if (m) return pats[i][1].replace(/\{g:\$(\d)\}/g, function (_, n) { return gram(m[n]) || m[n]; })
+          .replace(/\{\$(\d)\}/g, function (_, n) { return tr(m[n]) || D.books[m[n]] || m[n]; })
+          .replace(/\$(\d)/g, function (_, n) { return m[n]; });
+      }
+      return null;
+    }
+    var oneWordIn = D.oneWordIn, gramIn = D.grammarIn.join(','), abbrIn = D.abbrIn.join(',');
+    function text(n) {
+      var p = n.parentNode;
+      if (!p || p.nodeType !== 1 || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.tagName)) return;
+      var raw = n.nodeValue, k = norm(raw);
+      if (!k || !/[A-Za-z]/.test(k)) return;
+      var r = null;
+      if (k.indexOf(' ') < 0 && D.text[k] !== undefined && !p.matches(oneWordIn)) r = null;
+      else r = tr(k);
+      if (r === null && p.matches(gramIn)) r = gram(k);
+      if (r === null && p.closest(abbrIn) && D.bookAbbr[k]) r = D.bookAbbr[k];
+      if (r === null && p.tagName === 'OPTION' && D.books[k]) r = D.books[k];
+      if (r !== null && r !== k) n.nodeValue = raw.replace(/\S[\s\S]*\S|\S/, function () { return r; });
+    }
+    function block(el) {
+      if (!el.children.length || el.hasAttribute('data-ja')) return;
+      var t = el.textContent;
+      if (t.length > 1600) return;
+      var j = D.blocks[norm(t)];
+      if (j === undefined) return;
+      var kids = [].slice.call(el.children), frag = document.createDocumentFragment(), re = /<(\d+)>([\s\S]*?)<\/\1>/g, at = 0, m;
+      while ((m = re.exec(j))) {
+        if (m.index > at) frag.appendChild(document.createTextNode(j.slice(at, m.index)));
+        var c = kids[m[1] - 1] ? kids[m[1] - 1].cloneNode(false) : document.createElement('span');
+        c.textContent = m[2]; frag.appendChild(c); at = re.lastIndex;
+      }
+      if (at < j.length) frag.appendChild(document.createTextNode(j.slice(at)));
+      el.textContent = ''; el.appendChild(frag); el.setAttribute('data-ja', '1');
+    }
+    var ATTRS = ['placeholder', 'aria-label', 'title', 'alt'];
+    function attrs(el) {
+      for (var i = 0; i < ATTRS.length; i++) {
+        var v = el.getAttribute(ATTRS[i]);
+        if (v && /[A-Za-z]/.test(v)) { var r = tr(norm(v)); if (r !== null && r !== v) el.setAttribute(ATTRS[i], r); }
+      }
+    }
+    function sweep(top) {
+      if (top.nodeType === 3) { text(top); return; }
+      if (top.nodeType !== 1) return;
+      var up = top.closest('p,li');
+      if (up) block(up);
+      [].forEach.call(top.querySelectorAll('p,li'), block);
+      attrs(top);
+      [].forEach.call(top.querySelectorAll('[placeholder],[aria-label],[title],[alt]'), attrs);
+      var w = document.createTreeWalker(top, NodeFilter.SHOW_TEXT), n, all = [];
+      while ((n = w.nextNode())) all.push(n);
+      all.forEach(text);
+    }
+    var t0 = tr(norm(document.title)); if (t0) document.title = t0;
+    var bar = document.querySelector('.a2bar');
+    if (bar && D.note) { var note = document.createElement('p'); note.className = 'owsja-note'; note.textContent = D.note; bar.parentNode.insertBefore(note, bar.nextSibling); }
+    sweep(document.body);
+    [].forEach.call(document.querySelectorAll('.owslang-btn'), function (b) { b.textContent = D.switch.toEn; b.lang = 'en'; });
+    new MutationObserver(function (ms) {
+      ms.forEach(function (m) {
+        if (m.type === 'attributes') attrs(m.target);
+        else if (m.type === 'characterData') text(m.target);
+        else [].forEach.call(m.addedNodes, sweep);
+      });
+    }).observe(document.body, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ATTRS });
+    ready();
+  }
 })();
 </script>
 
