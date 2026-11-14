@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Suggested corrections to the Japanese Freedom Bible (jpnm) in Mark 1, checked against the Byzantine Greek, with the Greek word by word.">
+<script>try{if(/[?&]text=large\b/.test(location.search)||localStorage.getItem('ows-text')==='large')document.documentElement.classList.add('owsbig')}catch(e){}</script>
 <title>Freedom Bible Review</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
@@ -129,9 +130,24 @@ textarea.jp{font-size:1rem}
 .rnote{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:14px}
 </style>
 
+<style>
+.owsbig-btn { margin-left: auto; font: 600 15px var(--a2-ui, system-ui, sans-serif); color: var(--ink, #1c1917); background: var(--sheet, #fff);
+  border: 2px solid currentColor; border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; }
+.owsbig-btn:hover { background: var(--paper, #f3f1f1); }
+.owsbig-btn:focus-visible { outline: 3px solid var(--focus, #0069a8); outline-offset: 2px; }
+.owsbig-btn[aria-pressed="true"] { background: var(--ink, #1c1917); color: var(--sheet, #fff); }
+.a2bar-home { justify-content: flex-end; }
+html.owsbig body { zoom: 1.25; }
+html.owsbig { --ink-2: var(--ink); --muted: var(--fg, var(--ink)); }
+html.owsbig .owsbig-btn { zoom: 0.8; font-size: 19px; min-height: 55px; }
+html.owsbig :is(p, li, td, dd, blockquote) { line-height: 1.7; }
+html.owsbig a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+html.owsbig :is(button, select, input, [role="button"], [role="tab"], [role="option"]) { min-height: 44px; }
+html.owsbig :is([lang="grc"], [lang="el"], [lang="he"], [lang="hbo"], .gk, .grk, .greek, .heb, .hebrew, .orig) { font-size: 112%; }
+</style>
 </head>
 <body>
-<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
+<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span><button type="button" class="owsbig-btn" aria-pressed="false">Larger text</button></nav>
 <main class="wrap">
   <header class="lede">
     <h1>Freedom Bible review: Mark 1</h1>
@@ -226,7 +242,7 @@ textarea.jp{font-size:1rem}
     </section>
   </div>
 </main>
-<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource, and not an eBible.org page. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
+<footer><p class="a2foot">This is not an eBible.org page. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
 
 <script>
 (function(){
@@ -490,6 +506,59 @@ if(window.claude&&window.claude.use){
     render();
   }).catch(function(){render()});
 }
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'ows-text', MIN = 14;
+  function floor(el) {
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim()) {
+      var z = parseFloat(getComputedStyle(el).fontSize);
+      if (z && z < MIN) el.style.fontSize = MIN + 'px';
+      return;
+    }
+  }
+  function sweep(top) {
+    if (top.nodeType === 3) top = top.parentNode;
+    if (!top || top.nodeType !== 1) return;
+    if (top.closest('details:not([open])') && top.tagName !== 'DETAILS') return;
+    floor(top);
+    var all = top.getElementsByTagName('*');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.tagName === 'DETAILS' && !el.open) {  // closed: only its summary is drawn; the rest is swept when it opens
+        var sum = el.querySelector('summary');
+        if (sum) { floor(sum); [].forEach.call(sum.getElementsByTagName('*'), floor); }
+        i += el.getElementsByTagName('*').length;
+        continue;
+      }
+      floor(el);
+    }
+  }
+  var pending = [];
+  function later(nodes) {
+    if (!pending.length) requestAnimationFrame(function () { var p = pending; pending = []; p.forEach(sweep); });
+    pending.push.apply(pending, nodes);
+  }
+  sweep(document.body);
+  document.addEventListener('toggle', function (e) { if (e.target.open) later([e.target]); }, true);
+  new MutationObserver(function (ms) { ms.forEach(function (m) { later([].slice.call(m.addedNodes)); }); })
+    .observe(document.body, { childList: true, subtree: true });
+  function show() {
+    var on = root.classList.contains('owsbig');
+    document.querySelectorAll('.owsbig-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? 'Normal text' : 'Larger text';
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.owsbig-btn');
+    if (!b) return;
+    var on = root.classList.toggle('owsbig');
+    try { localStorage.setItem(KEY, on ? 'large' : 'normal'); } catch (err) {}
+    show();
+  });
+  show();
 })();
 </script>
 </body>

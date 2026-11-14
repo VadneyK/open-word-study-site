@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>try{if(/[?&]text=large\b/.test(location.search)||localStorage.getItem('ows-text')==='large')document.documentElement.classList.add('owsbig')}catch(e){}</script>
 <meta name="description" content="Every dataset behind Open Word Study, with its licence and how it was changed.">
 <meta property="og:title" content="Sources and licences">
 <meta property="og:description" content="Every dataset behind Open Word Study, with its licence and how it was changed.">
@@ -67,7 +68,22 @@ h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important;
 .owsload { max-width: 1180px; margin: 8px auto 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font: 14px/1.5 var(--a2-ui); color: var(--ink-2); }
 .owsload a { color: inherit; }
 </style>
-<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span></nav>
+<style>
+.owsbig-btn { margin-left: auto; font: 600 15px var(--a2-ui, system-ui, sans-serif); color: var(--ink, #1c1917); background: var(--sheet, #fff);
+  border: 2px solid currentColor; border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; }
+.owsbig-btn:hover { background: var(--paper, #f3f1f1); }
+.owsbig-btn:focus-visible { outline: 3px solid var(--focus, #0069a8); outline-offset: 2px; }
+.owsbig-btn[aria-pressed="true"] { background: var(--ink, #1c1917); color: var(--sheet, #fff); }
+.a2bar-home { justify-content: flex-end; }
+html.owsbig body { zoom: 1.25; }
+html.owsbig { --ink-2: var(--ink); --muted: var(--fg, var(--ink)); }
+html.owsbig .owsbig-btn { zoom: 0.8; font-size: 19px; min-height: 55px; }
+html.owsbig :is(p, li, td, dd, blockquote) { line-height: 1.7; }
+html.owsbig a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+html.owsbig :is(button, select, input, [role="button"], [role="tab"], [role="option"]) { min-height: 44px; }
+html.owsbig :is([lang="grc"], [lang="el"], [lang="he"], [lang="hbo"], .gk, .grk, .greek, .heb, .hebrew, .orig) { font-size: 112%; }
+</style>
+<nav class="a2bar" aria-label="Site"><a href="../">Open Word Study</a><span>Free Bible study tools from open data</span><button type="button" class="owsbig-btn" aria-pressed="false">Larger text</button></nav>
 <div class="wrap" role="main">
   <h1>Sources and licences</h1>
   <p>Everything on this site comes from openly licensed or public domain data. Thank you to the people and organizations who made it free to use. None of them made or endorse this site.</p>
@@ -99,6 +115,18 @@ h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important;
     <li><h3>Berean Standard Bible and Berean interlinear tables</h3>
       <p class="lic">Public domain. <a href="https://berean.bible">Source</a>.</p>
       <p>English text and renderings aligned to the Greek and Hebrew. Used in every tool that shows English Scripture. The Interlinear Reader is built from these tables alone, with their Nestle base Greek and Westminster Leningrad Codex Hebrew.</p></li>
+    <li><h3>Freedom Bible (Japanese), フリーダム・バイブル</h3>
+      <p class="lic">eBible.org. Public domain (a draft translation). <a href="https://ebible.org/jpnm/">Source</a>.</p>
+      <p>The Japanese text under review. Used in Freedom Bible Review.</p></li>
+    <li><h3>Robinson-Pierpont Byzantine Greek New Testament</h3>
+      <p class="lic">Maurice A. Robinson and William G. Pierpont. Public domain. <a href="https://github.com/byztxt/byzantine-majority-text">Source</a>.</p>
+      <p>The Greek text the Freedom Bible follows, with Strong's numbers and parsing. Used in Freedom Bible Review.</p></li>
+    <li><h3>World English Bible</h3>
+      <p class="lic">eBible.org. Public domain. <a href="https://ebible.org/engwebp/">Source</a>.</p>
+      <p>An English comparison text. Used in Freedom Bible Review.</p></li>
+    <li><h3>Japanese Colloquial Bible (口語訳, 1955)</h3>
+      <p class="lic">Public domain. <a href="https://github.com/seven1m/open-bibles">Source</a>.</p>
+      <p>A Japanese comparison text. Used in Freedom Bible Review.</p></li>
   </ul>
 
   <h2>Open-source software</h2>
@@ -116,8 +144,61 @@ h1 { font-size: clamp(30px, 5vw, 46px) !important; line-height: 1.05 !important;
   <p>Copyrighted translations such as the ESV and NIV are not used. No data, text or interface from any commercial Bible software is used. These tools are a study aid, not a replacement for a full Bible software library.</p>
 
   <h2>Privacy</h2>
-  <p>No accounts and no analytics. Your browser remembers the last word you opened, on your device only. Fonts load from Google Fonts, so Google can see that request; if they are blocked, the pages still work with your device's fonts.</p>
+  <p>No accounts and no analytics. Your browser remembers the last word or passage you opened, your display choices, and whether you turned on Larger text, on your device only. Fonts load from Google Fonts, so Google can see that request; if they are blocked, the pages still work with your device's fonts.</p>
 </div>
-<footer><p class="a2foot">Made by a member of Acts 2 Network Berkeley. It is not an official Acts2 Network resource. Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
+<footer><p class="a2foot">Built from open data; see <a href="../sources/">sources and licences</a>.</p></footer>
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'ows-text', MIN = 14;
+  function floor(el) {
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim()) {
+      var z = parseFloat(getComputedStyle(el).fontSize);
+      if (z && z < MIN) el.style.fontSize = MIN + 'px';
+      return;
+    }
+  }
+  function sweep(top) {
+    if (top.nodeType === 3) top = top.parentNode;
+    if (!top || top.nodeType !== 1) return;
+    if (top.closest('details:not([open])') && top.tagName !== 'DETAILS') return;
+    floor(top);
+    var all = top.getElementsByTagName('*');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.tagName === 'DETAILS' && !el.open) {  // closed: only its summary is drawn; the rest is swept when it opens
+        var sum = el.querySelector('summary');
+        if (sum) { floor(sum); [].forEach.call(sum.getElementsByTagName('*'), floor); }
+        i += el.getElementsByTagName('*').length;
+        continue;
+      }
+      floor(el);
+    }
+  }
+  var pending = [];
+  function later(nodes) {
+    if (!pending.length) requestAnimationFrame(function () { var p = pending; pending = []; p.forEach(sweep); });
+    pending.push.apply(pending, nodes);
+  }
+  sweep(document.body);
+  document.addEventListener('toggle', function (e) { if (e.target.open) later([e.target]); }, true);
+  new MutationObserver(function (ms) { ms.forEach(function (m) { later([].slice.call(m.addedNodes)); }); })
+    .observe(document.body, { childList: true, subtree: true });
+  function show() {
+    var on = root.classList.contains('owsbig');
+    document.querySelectorAll('.owsbig-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? 'Normal text' : 'Larger text';
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.owsbig-btn');
+    if (!b) return;
+    var on = root.classList.toggle('owsbig');
+    try { localStorage.setItem(KEY, on ? 'large' : 'normal'); } catch (err) {}
+    show();
+  });
+  show();
+})();
+</script>
 
 </html>
